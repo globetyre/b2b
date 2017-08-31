@@ -1,0 +1,2 @@
+- wysyłanie maili bez celery do sklepu i klienta
+

@@ -52,6 +52,8 @@ def get_stan(request):
     ftpG.retrbinary('RETR ' + filenameG,open(filenameG, 'wb').write) # Download file from server
     ftpG.close() # Close connection
 
+    old_products = Product.objects.all().update(available = False)
+
     # Create the database
     connection = sqlite3.connect("db.sqlite3")
     cursor = connection.cursor()
@@ -97,6 +99,7 @@ def get_stan(request):
         cursor.execute('UPDATE shop_product SET dot=? WHERE sap=?', (dot,sap))
         cursor.execute('UPDATE shop_product SET updated=? WHERE sap=?', (updated,sap))
         cursor.execute('UPDATE shop_product SET price_ue=? WHERE sap=?', (price_ue,sap))
+        cursor.execute('UPDATE shop_product SET available=? WHERE sap=?', (available,sap))
 
     # Close the csv file, commit changes, and close the connection
     csvfile.close()

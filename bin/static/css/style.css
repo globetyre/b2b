@@ -210,3 +210,7 @@ p.is-small {
     width: 60%;
     margin: 0 auto;
 }
+
+input[name=q] {
+width: 300px;
+}
