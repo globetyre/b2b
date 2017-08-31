@@ -1,0 +1,122 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+{% if category %}{{ category.title }}{% else %}{{ product.name }}{% endif %} {% endblock %}
+
+{% block content %}
+
+<div class="tile is-ancestor">
+    <div class="tile is-parent">
+        <article class="tile is-child notification is-info">
+            <p class="title"><a class="button is-info" href="/"><span class="icon"><i class="fa fa-arrow-left" aria-hidden="true"></i></span></a> {{ product.name }}</p>
+        </article>
+    </div>
+</div>
+<div class="tile is-ancestor" id="product-detail">
+    <div class="tile is-vertical is-9">
+
+        <div class="tile">
+            <div class="tile is-parent">
+                <article class="tile is-child ">
+                    <figure class="image img-max">
+                        <img src="/media/{{ product.image.image }}">
+                    </figure>
+                </article>
+            </div>
+            <div class="tile is-parent is-vertical">
+                <article class="tile is-child notification">
+                    <table class="table is-fullwidth">
+                        <tr>
+                            <th class="is-size-7">Manufacturer</th>
+                            <th>{{ product.manufacturer }}</th>
+                        </tr>
+                        <tr>
+                            <th>Model</th>
+                            <th>{{ product.model }}</th>
+                        </tr>
+                        <tr>
+                            <th>Size</th>
+                            <th>{{ product.size }}</th>
+                        </tr>
+                        <tr>
+                            <th class="is-size-7">SAP</th>
+                            <th>{{ product.sap }}</th>
+                        </tr>
+                        <tr>
+                            <th>EAN</th>
+                            <th>{{ product.ean }}</th>
+                        </tr>
+                    </table>
+                </article>
+                <article class="tile is-child notification">
+                    <table class="table is-fullwidth">
+                        <tr>
+                            <th>Load index</th>
+                            <th>{{ product.load_index }}</th>
+                        </tr>
+                        <tr>
+                            <th>Speed index</th>
+                            <th>{{ product.speed_index }}</th>
+                        </tr>
+                        <tr>
+                            <th>Rolling resistance</th>
+                            <th>{{ product.rolling_resistance }}</th>
+                        </tr>
+                        <tr>
+                            <th>Adhesion</th>
+                            <th>{{ product.adhesion }}</th>
+                        </tr>
+                        <tr>
+                            <th>Noise</th>
+                            <th>{{ product.noise }}[db]</th>
+                        </tr>
+                        <tr>
+                            <th>DOT</th>
+                            <th>{{ product.dot }}</th>
+                        </tr>
+                    </table>
+                </article>
+            </div>
+        </div>
+    </div>
+    <div class="tile is-parent">
+        <article class="tile is-child notification">
+            <div class="content">
+                <div class="content has-text-centered">
+                    <article class="message is-info">
+                        <div class="message-body">
+                           {% if request.user.profile.country == "Polska" %}
+                            <p class="title is-1 no-mar-bottom"><b>{{ product.price }}</b> zł</p>
+                            {% else %}
+                            <p class="title is-1 no-mar-bottom"><b>{{ product.price_ue }}</b><span class="icon is-medium"><i class="fa fa-eur" aria-hidden="true"></i></span></p>
+                            {% endif %}
+                            <span class="tag is-info is-medium"><p>Available: {{ product.stock }} pcs</p></span>
+                            <p>
+                                <form action="{% url 'cart:cart_add' product.id %}" method="post">{% csrf_token %}
+                                    <div class="control">
+                                        <div class="field">
+                                            <div class="control">
+                                                {{ cart_product_form }}
+                                            </div>
+                                        </div>
+                                        <div class="control">
+                                            <p class="field has-text-right">
+                                                <button type="submit" class="button is-info btn-add-cart">
+                                                        <span class="icon">
+                                                      <i class="fa fa-cart-plus"></i>
+                                                    </span>
+                                                        <span>Add to cart</span>
+                                                    </button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+{% endblock %}

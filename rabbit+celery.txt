@@ -1,0 +1,2 @@
+start rabbit : rabbitmq-server
+stary celery : celery -A bin worker -l info

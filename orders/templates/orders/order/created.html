@@ -1,0 +1,17 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Thank you{% endblock %}
+
+{% block content %}
+
+<div class="notification is-primary">
+  <p class="title">Thank you</p>
+  <p class="subtitle">Your order has been successfully completed.</p>
+  <p class="subtitle"></p><a href="/orders/order/{{ order.id }}">Your order number is <strong>{{ order.id }}</strong>.</a>
+    <script>
+        var timer = setTimeout(function() {
+            window.location='/account/'
+        }, 1500);
+    </script>
+</div>
+{% endblock %}

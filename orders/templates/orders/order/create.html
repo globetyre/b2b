@@ -1,0 +1,152 @@
+{% extends "shop/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="tile is-ancestor">
+    <div class="tile is-vertical">
+        <div class="tile">
+            <div class="tile is-parent is-vertical">
+                <article class="tile is-child notification is-primary">
+                <div class="content">
+                    <p class="title">Your order</p>
+                    <table class="table is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>Quantity</th>
+                                <th>Product</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in cart %}
+                        <tr>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.product.name }}</td>
+                            <td><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.total_price }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <p class="has-text-right"><strong>Total: <span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ cart.get_total_price }}</strong></p>
+                </article>
+            </div>
+        </div>
+    </div>
+    <div class="tile is-parent">
+        <article class="tile is-child notification is-light">
+            <div class="content">
+            <p class="title">Shipping Address</p>
+                {% if request.user.profile.b2b is True %}
+                    <form action="." method="post">{% csrf_token %}
+                        <div class="field">
+                            <label class="label">Firs name</label>
+                            <div class="control">
+                                {{ form.first_name|add_class:"input input-disabled" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Lasst name</label>
+                            <div class="control">
+                                {{ form.last_name|add_class:"input input-disabled" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control">
+                                {{ form.email|add_class:"input input-disabled" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Address</label>
+                            <div class="control">
+                                {{ form.address|add_class:"input input-disabled" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Postal code</label>
+                            <div class="control">
+                                {{ form.postal_code|add_class:"input input-disabled" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">City</label>
+                            <div class="control">
+                                {{ form.city|add_class:"input input-disabled" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Country</label>
+                            <div class="control">
+                                {{ form.country|add_class:"input input-disabled" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Country</label>
+                            <div class="control">
+                                {{ form.delivery_price|add_class:"input input-disabled" }}
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button type="submit" class="button is-success is-small">Place order</button>
+                            </div>
+                        </div>
+                    </form>
+                {% else %}
+                    <form action="." method="post">{% csrf_token %}
+                        <div class="field">
+                            <label class="label">Firs name</label>
+                            <div class="control">
+                                {{ form.first_name|add_class:"input" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Lasst name</label>
+                            <div class="control">
+                                {{ form.last_name|add_class:"input" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control">
+                                {{ form.email|add_class:"input" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Address</label>
+                            <div class="control">
+                                {{ form.address|add_class:"input" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Postal code</label>
+                            <div class="control">
+                                {{ form.postal_code|add_class:"input" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">City</label>
+                            <div class="control">
+                                {{ form.city|add_class:"input" }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Country</label>
+                            <div class="control">
+                                {{ form.country|add_class:"input" }}
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button type="submit" class="button is-success is-small">Place order</button>
+                            </div>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </article>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends "shop/base.html" %}
+{% block title %} Order {{ order.id }} {{ block.super }} {% endblock %}
+
+
+{% block content %}
+
+<script>
+    function printElem(divId) {
+    var content = document.getElementById(divId).innerHTML;
+    var mywindow = window.open('', 'Print', 'height=600,width=800');
+
+    mywindow.document.write('<html><head><title>Print</title>');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write(content);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close();
+    mywindow.focus()
+    mywindow.print();
+    mywindow.close();
+    return true;
+}
+</script>
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-fluid">
+<article class="message">
+  <div class="message-header">
+    <h1 class="title has-text-light">Order number: {{ order.id }}</h1>
+  </div>
+</article>
+            <div class="columns" id="order_detail_panel">
+                <div class="column">
+                    <article class="message">
+                        <div class="message-header">
+                            <p>Invoice</p>
+                        </div>
+                        <div class="message-body">
+                            <table class="table is-fullwidth">
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{{ order.buyer.first_name }} {{ order.buyer.last_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>E-mail</th>
+                                    <td><a href="mailto:{{ order.buyer.email }}">{{ order.buyer.email }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Company</th>
+                                    <td>{{ order.buyer.profile.company_name }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>UStID</th>
+                                    <td>{{ order.buyer.profile.nip }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td>{{ order.buyer.profile.address }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Postal Code</th>
+                                    <td>{{ order.buyer.profile.postal_code }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>City</th>
+                                    <td>{{ order.buyer.profile.city }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Country</th>
+                                    <td>{{ order.buyer.profile.country }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Print order</th>
+                                    <td><a href="#"  onclick="printElem('order_detail_panel');"><span class="icon is-small"><i class="fa fa-print"></i></span></a></td>
+                                </tr>
+                                <tr>
+                                    <th>Invoice</th>
+                                    {% if order.invoice %}
+                                       <td><a href="/media/{{ order.invoice }}" target="_blank"><span class="icon is-small"><i class="fa fa-download"></i></span></a></td>
+                                    {% else %}
+                                        <th></th>
+                                    {% endif %}
+                                </tr>
+                            </table>
+                        </div>
+                    </article>
+                </div>
+                <div class="column">
+                    <article class="message">
+                        <div class="message-header">
+                            <p>Shipping</p>
+                        </div>
+                        <div class="message-body">
+                            <table class="table is-fullwidth">
+                                <tr>
+                                    <th>Created</th>
+                                    <td>{{ order.created }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Customer</th>
+                                    <td>{{ order.first_name }} {{ order.last_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>E-mail</th>
+                                    <td><a href="mailto:{{ order.email }}">{{ order.email }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td>{{ order.address }}, {{ order.postal_code }} {{ order.ci }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    {% if order.status == 'New' %}
+                                    <td><a class="button is-info is-small">{{ order.status }}</a></td>
+                                    {% endif %}
+                                    {% if order.status == 'Accepted' %}
+                                    <td><a class="button is-primary is-small">{{ order.status }}</a></td>
+                                    {% endif %}
+                                    {% if order.status == 'Done' %}
+                                    <td><a class="button is-success is-small">{{ order.status }}</a></td>
+                                    {% endif %}
+                                    {% if order.status == 'Rejected' %}
+                                    <td><a class="button is-danger is-small">{{ order.status }}</a></td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <th>Tracking Number</th>
+                                    {% if order.tracking_number is None %}
+                                        <th>No tracking number</th>
+                                    {% else %}
+                                        <th><a href="https://tracktrace.dpd.com.pl/parcelDetails?typ=1&p1={{ order.tracking_number }}" target="_blank">DPD</a></th>
+                                    {% endif %}
+                                </tr>
+                            </table>
+                        </div>
+                    </article>
+                </div>
+                <div class="column is-5">
+                    <article class="message">
+                        <div class="message-header">
+                            <p>Detail</p>
+                        </div>
+                        <div class="message-body">
+                            <table class="table is-fullwidth">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in order.items.all %}
+                                    <tr>
+                                        <td><small>{{ item.product.name }}</small></td>
+                                        <td class="num">${{ item.price }}</td>
+                                        <td class="num">{{ item.quantity }}</td>
+                                        <td class="num">${{ item.get_cost }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr class="total">
+                                        <td colspan="3">Total</td>
+                                        <td class="num">${{ order.get_total_cost }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

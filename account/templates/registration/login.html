@@ -1,0 +1,58 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html>
+
+	<head>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>{% block title %}Login{% endblock %}</title>
+	    <!-- CSS -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+	    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+	</head>
+
+	<body>
+	    <section class="hero is-fullheight is-bold login-bg">
+	        <div class="hero-body">
+	            <div class="container">
+	                <div class="columns is-vcentered">
+	                    <div class="column is-4 is-offset-4">
+	                    {% block content %}
+	                        <div class="box">
+		                        <figure class="image logo">
+								  <img src="{% static 'img/logo.png' %}">
+								</figure>
+								<hr>
+							    <form action="{% url 'login' %}" method="post">{% csrf_token %}
+								    <label class="label">Username</label>
+		                            <p class="control">
+		                                {{ form.username|add_class:"input" }}
+		                            </p>
+
+		                            <label class="label">Password</label>
+		                            <p class="control">
+		                                {{ form.password|add_class:"input" }}
+		                            </p>
+							        <input type="hidden" name="next" value="{{ next }}" />
+							        <hr>
+							        <p class="control-login">
+							        <button type="submit" class="button is-success">Login <span class="icon is-small"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></button>
+							        </p>
+							    </form>
+							    <br>
+							    <p class="has-text-centered"><small>If you do not have access to our B2B system yet, please contact our Customer Service.</small></p>
+								<p class="has-text-centered"><small><span class="icon is-small"><i class="fa fa-phone"></i></span> +48 533 377 107</small> |
+								<small><span class="icon is-small"><i class="fa fa-envelope"></i></span> patryk@globetyre.pl</small></p>
+	                        </div>
+                        {% endblock %}
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	</body>
+
+</html>

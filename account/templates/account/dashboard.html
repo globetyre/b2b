@@ -1,0 +1,140 @@
+{% extends "shop/base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="tile is-ancestor">
+    <div class="tile is-vertical is-2">
+        <div class="tile">
+            <div class="tile is-parent">
+                <article class="tile is-child">
+                    <div class="content">
+                        <article class="message is-primary">
+                            <div class="message-header height-40 has-justify-content-center">
+                                <p>{{ request.user.profile.company_name }}</p>
+                            </div>
+                            <div class="message-body">
+                                <table class="table is-fullwidth">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>{{ request.user.username }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>NIP</th>
+                                        <th>{{ request.user.profile.nip }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <th>{{ request.user.profile.address }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Postal Code</th>
+                                        <th>{{ request.user.profile.postal_code }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>City</th>
+                                        <th>{{ request.user.profile.city }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Country</th>
+                                        <th>{{ request.user.profile.country }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>{{ request.user.first_name }} {{ request.user.last_name }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>{{ request.user.email }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Delivery time:</th>
+                                        <th>{{ request.user.profile.delivery_time }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Delivery price</th>
+                                        <th>{{ request.user.profile.delivery_price }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Last login</th>
+                                        <th>{{ request.user.last_login|date:"d-m-Y H:i" }}</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </article>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <div class="tile is-parent">
+        <article class="tile is-child">
+            <div class="content">
+                <article class="message is-info">
+                    <div class="message-header">
+                        <p class="mar-bottom-0">Zamówienia</p>
+                        <span class="tag is-white is-rounded">{{ orders.count }}</span>
+                    </div>
+                    <div class="message-body">
+                        {% if orders.count > 0 %}
+                        <table class="table is-striped is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th>Order number</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>Postal code</th>
+                                    <th>City</th>
+                                    <th>Country</th>
+                                    <th>Email</th>
+                                    <th>Created</th>
+                                    <th>Tracking number</th>
+                                    <th>Status</th>
+                                    <th>Invoice</th>
+                                    <th>Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in orders %}
+                                <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.first_name }} {{ item.last_name }}</td>
+                                    <td>{{ item.address }}</td>
+                                    <td>{{ item.postal_code }}</td>
+                                    <td>{{ item.city }}</td>
+                                    <td>{{ item.country }}</td>
+                                    <td>{{ item.email }}</td>
+                                    <td>{{ item.created|date:'d-m-Y H:i' }}</td>
+                                    {% if item.tracking_number is None %}
+                                    <td>No tracking number</td>
+                                    {% else %}
+                                    <td><a href="https://tracktrace.dpd.com.pl/parcelDetails?typ=1&p1={{ item.tracking_number }}" target="_blank">DPD</a></td>
+                                    {% endif %} {% if item.status == 'New' %}
+                                    <td><a class="button is-info is-small">{{ item.status }}</a></td>
+                                    {% endif %} {% if item.status == 'Accepted' %}
+                                    <td><a class="button is-primary is-small">{{ item.status }}</a></td>
+                                    {% endif %} {% if item.status == 'Done' %}
+                                    <td><a class="button is-success is-small">{{ item.status }}</a></td>
+                                    {% endif %} {% if item.status == 'Rejected' %}
+                                    <td><a class="button is-danger is-small">{{ item.status }}</a></td>
+                                    {% endif %} {% if item.invoice %}
+                                    <td><a href="/media/{{ item.invoice }}" target="_blank"><span class="icon is-small"><i class="fa fa-download"></i></span></a></td>
+                                    {% else %}
+                                    <td></td>
+                                    {% endif %}
+                                    <td><a href="/orders/order/{{ item.id }}"><span class="icon is-small"><i class="fa fa-eye"></i></span></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <p>No orders</p>
+                        {% endif %}
+                    </div>
+                </article>
+            </div>
+            </article>
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,148 @@
+.navbar-brand {
+    max-width: 130px;
+}
+
+.navbar-brand a.navbar-item:hover,
+.navbar-brand a.navbar-item.is-active,
+.navbar-brand .navbar-link:hover,
+.navbar-brand .navbar-link.is-active {
+    background-color: transparent;
+}
+
+.navbar {
+    background-color: #8e44ad;
+}
+
+.navbar-item {
+    color: #ffffff;
+}
+
+a.navbar-item:hover,
+a.navbar-item.is-active,
+.navbar-link:hover,
+.navbar-link.is-active {
+    background-color: #ffffff;
+    color: #2c3e50;
+}
+
+.main {
+    margin-top: 3%;
+}
+
+.main a {
+    text-decoration: none !important;
+}
+
+.main .table {
+    background-color: transparent;
+}
+
+
+/*.main .table th {
+	text-align: center;
+}
+*/
+
+
+/*.main .table td {
+	font-weight: normal;
+	vertical-align: middle;
+}*/
+
+.main .table tr {
+    font-size: 12px;
+    line-height: 1;
+}
+
+.main .table .image {
+    margin: 0 auto;
+}
+
+#id_quantity {
+    width: 80px;
+}
+
+.top-bar {
+    text-align: center;
+}
+
+.item-bar {
+    text-align: center;
+}
+
+.logo {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.control-login {
+    text-align: right;
+}
+
+.control-login>.button {
+    text-transform: uppercase;
+    padding: 0 40px;
+    font-weight: bold;
+}
+
+.control-login>.button .fa {
+    margin-left: 10px;
+    font-size: 10px;
+}
+
+.login-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url(../img/login-bg.jpg);
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100vh;
+}
+
+.logout {
+    padding: 70px;
+}
+
+#product-detail #id_quantity {
+    width: 100%;
+}
+
+#product-detail .btn-add-cart {
+    width: 100%;
+}
+
+.input-disabled {
+    pointer-events: none;
+    background-color: #f5f5f5;
+}
+
+.fa-eur {
+    margin-right: 5px;
+}
+
+.img-max {
+    max-height: 500px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.no-mar-bottom {
+    margin-bottom: 20px !important;
+}
+
+.mar-bottom-0 {
+    margin-bottom: 0 !important;
+}
+
+.height-40 {
+    height: 40px;
+}
+
+.has-justify-content-center {
+    justify-content: center;
+}
+
+.footer {
+     background-color: #fff;
+    padding: 4rem 1.5rem 3rem;
+}

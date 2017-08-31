@@ -1,0 +1,15 @@
+{% extends "registration/login.html" %}
+{% load static %}
+{% block title %}Logged out{% endblock %}
+
+{% block content %}
+<div class="box has-text-centered logout">
+	<figure class="image logo">
+		<img src="{% static 'img/logo.png' %}">
+	</figure>
+	<hr>
+	<p>You have been successfully logged out.</p>
+	<p>You can <a href="{% url 'login' %}">log-in again</a>.</p>
+</div>
+
+{% endblock %}

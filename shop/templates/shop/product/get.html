@@ -1,0 +1,20 @@
+{% extends "shop/base.html" %}
+{% load staticfiles %}
+{% block title %}{% if category %}{{ category.name }}{% else %}Pobieranie produktów{% endif %} {% endblock %}
+
+{% block content %}
+<section class="hero is-warning is-fullheight has-text-centered">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="subtitle">Wykonano</h1>
+            <h2 class="title">Zadanie zostało wykonane pomyślnie</h2>
+            <p>Powrót do poprzdniej strony nastąpi za 1 sekundy</p>
+            <script>
+                var timer = setTimeout(function() {
+                    window.location='/admin/shop/product/'
+                }, 500);
+            </script>
+        </div>
+    </div>
+</section>
+{% endblock %}

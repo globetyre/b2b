@@ -1,0 +1,51 @@
+{% extends "shop/base.html" %} {% load static %} {% load widget_tweaks %} {% block title %} Koszyk {% endblock %} {% block content %}
+
+<article class="message is-primary">
+    <div class="message-header">
+        <p>Koszyk</p>
+    </div>
+    <div class="message-body">
+        <table class="table is-striped is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Ilość</th>
+                    <th>Usuń</th>
+                    <th>Cena</th>
+                    <th>Suma</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %} {% with product=item.product %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>
+                        <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                            {{ item.update_quantity_form.quantity }} {{ item.update_quantity_form.update }}
+                            <button class="button is-warning is-small" type="submit">Aktualizuj</button> {% csrf_token %}
+                        </form>
+                    </td>
+                    <td><a href="{% url 'cart:cart_remove' product.id %}"><span class="icon"><i class="fa fa-trash"></i></span></a></td>
+                    {% if request.user.profile.country == "Polska" %}
+                        <td>{{ item.price }} zł</td>
+                        <td>{{ item.total_price }} zł</td>
+                    {% else %}
+                        <td><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.price_ue }}</td>
+                        <td><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.total_price }}</td>
+                    {% endif %}
+                </tr>
+                {% endwith %} {% endfor %}
+                <tr class="total">
+                    <td colspan="3">Total</td>
+                    <td></td>
+                    <td><b>{{ cart.get_total_price }}</b> zł</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="has-text-right">
+            <a href="{% url 'shop:product_list' %}" class="button is-light">Powrót do sklepu</a>
+            <a href="{% url 'orders:order_create' %}" class="button is-success">Zamów</a>
+        </p>
+    </div>
+</article>
+{% endblock %}
