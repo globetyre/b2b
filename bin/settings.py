@@ -28,7 +28,7 @@ SECRET_KEY = 'geq15nl8xjrdo7b@_kp5%026j(o26300tf2vk32su88kcn7u+t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 CART_SESSION_ID = 'cart'
 
