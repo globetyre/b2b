@@ -15,22 +15,22 @@
             </div>
         </a>
         <div class="column is-2">
-           <a href="{{ product.get_absolute_url }}">
+<!--           <a href="{{ product.get_absolute_url }}">-->
             <p class="title is-6 mar-bottom-0"><b>{{ product.manufacturer }}</b></p>
             <p class="is-small">{{ product.sap }}</p>
             <p class="is-small">{{ product.ean }}</p>
-            </a>
+<!--            </a>-->
         </div>
         <div class="column">
-           <a href="{{ product.get_absolute_url }}">
+<!--           <a href="{{ product.get_absolute_url }}">-->
             <p class="title is-4 mar-bottom-0">{{ product.name }}</p>
             {% if product.dot != "" %}
                 <p class="is-5">DOT: {{ product.dot }}</p>
             {% endif %}
-            </a>
+<!--            </a>-->
         </div>
         <div class="column is-3">
-           <a href="{{ product.get_absolute_url }}">
+<!--           <a href="{{ product.get_absolute_url }}">-->
                 <table class="table is-fullwidth">
                    {% if product.rolling_resistance != "" %}
                     <tr>
@@ -51,27 +51,27 @@
                     </tr>
                     {% endif %}
                 </table>
-            </a>
+<!--            </a>-->
         </div>
         <div class="column is-1">
-           <a href="{{ product.get_absolute_url }}">
+<!--           <a href="{{ product.get_absolute_url }}">-->
                 <p class="has-text-centered">Dostępność</p>
                 {% if product.stock >= 20 %}
                 <p class="title is-4 has-text-centered">>20</p>
                 {% else %}
                 <p class="title is-4 has-text-centered">{{ product.stock }}</p>
                 {% endif %}
-            </a>
+<!--            </a>-->
         </div>
         <div class="column is-1">
-           <a href="{{ product.get_absolute_url }}">
+<!--           <a href="{{ product.get_absolute_url }}">-->
             {% if request.user.profile.country == "Polska" %}
                 <p class="has-text-centered">Netto</p>
                 <p class="title is-4 has-text-centered">{{ product.price }} zł</p>
             {% else %}
                 <p class="title is-4 has-text-centered"> {{ product.price_ue }} eur</p>
             {% endif %}
-            </a>
+<!--            </a>-->
         </div>
         <div class="column is-1">
                 <form action="{% url 'cart:cart_add' product.id %}" method="post">{% csrf_token %}
