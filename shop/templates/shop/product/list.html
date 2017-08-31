@@ -3,180 +3,85 @@
 {% block title %}{% if category %}{{ category.name }}{% else %}Opony{% endif %} {% endblock %}
 
 {% block content %}
-
-<div class="tile is-ancestor">
-  <div class="tile is-vertical is-8">
-    <div class="tile">
-      <div class="tile is-parent is-vertical">
-        <article class="tile is-child notification is-primary">
-          <p class="title">Vertical...</p>
-          <p class="subtitle">Top tile</p>
-        </article>
-        <article class="tile is-child notification is-warning">
-          <p class="title">...tiles</p>
-          <p class="subtitle">Bottom tile</p>
-        </article>
-      </div>
-      <div class="tile is-parent">
-        <article class="tile is-child notification is-info">
-          <p class="title">Middle tile</p>
-          <p class="subtitle">With an image</p>
-          <figure class="image is-4by3">
-            <img src="http://bulma.io/images/placeholders/640x480.png">
-          </figure>
-        </article>
-      </div>
-    </div>
-    <div class="tile is-parent">
-      <article class="tile is-child notification is-danger">
-        <p class="title">Wide tile</p>
-        <p class="subtitle">Aligned with the right tile</p>
-        <div class="content">
-          <!-- Content -->
-        </div>
-      </article>
-    </div>
-  </div>
-  <div class="tile is-parent">
-    <article class="tile is-child notification is-success">
-      <div class="content">
-        <p class="title">Tall tile</p>
-        <p class="subtitle">With even more content</p>
-        <div class="content">
-          <!-- Content -->
-        </div>
-      </div>
-    </article>
-  </div>
-</div>
-
-<div class="tile is-ancestor">
-    <div class="tile is-parent">
-        <article class="tile is-child notification">
-            <div class="columns is-multiline is-centered">
-                {% for product in products %}
-                <div class="column is-one-quarter">
-                        <a href="{{ product.get_absolute_url }}">
-                        <div class="card">
-                                <div class="card-image">
-                                    <figure class="image is-square">
-                                        <img src="/media/{{ product.image.image }}" alt="Image">
-                                    </figure>
-                                </div>
-                                <div class="card-content">
-                                    <div class="media">
-                                        <div class="media-content">
-                                            <p class="title is-6"><b>{{ product.name }}</b></p>
-                                        </div>
-                                    </div>
-                                    <div class="content">
-                                        <table class="table">
-                                            <tr>
-                                                <th class="is-size-7">SAP</th>
-                                                <th>{{ product.sap }}</th>
-                                            </tr>
-                                            <tr>
-                                                <th>EAN</th>
-                                                <th>{{ product.ean }}</th>
-                                            </tr>
-                                            <tr>
-                                                <th>Rolling resistance</th>
-                                                <th>{{ product.rolling_resistance }}</th>
-                                            </tr>
-                                            <tr>
-                                                <th>Adhesion</th>
-                                                <th>{{ product.adhesion }}</th>
-                                            </tr>
-                                            <tr>
-                                                <th>Noise</th>
-                                                <th>{{ product.noise }}[db]</th>
-                                            </tr>
-                                            <tr>
-                                                <th>DOT</th>
-                                                <th>{{ product.dot }}</th>
-                                            </tr>
-                                            <tr>
-                                                <th>Available</th>
-                                                <th>{{ product.stock }}</th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                        </a>
-                        <footer class="card-footer">
-                            {% if request.user.profile.country == "Polska" %}
-                                <p class="card-footer-item">{{ product.price }} zł</p>
-                            {% else %}
-                                <p class="card-footer-item"{{ product.price_ue }} eur</p>
-                            {% endif %}
-                            <span class="card-footer-item">
-                                <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                                    <div class="field is-grouped">
-                                        <div class="control">
-                                            {{ cart_product_form }}
-                                        </div>
-                                        {% csrf_token %}
-                                        <div class="control">
-                                            <button type="submit" class="button is-success is-small"><span class="icon is-small"><i class="fa fa-cart-plus" aria-hidden="true"></i></span></button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </span>
-                        </footer>
-                        </div>
-                </div>
-                {% endfor %}
+<section id="product-list">
+{% for product in products %}
+<div class="notification">
+    <div class="columns is-1">
+        <a href="{{ product.image.image.url }}" target="_blank">
+            <div class="column  bg-white">
+                <figure class="image is-64x64">
+                    <img src="/media/{{ product.image.image }}" alt="Image">
+                </figure>
             </div>
-        </article>
-    </div>
-<!--
-    <div class="tile is-2">
-        <div class="tile">
-            <div class="tile is-parent">
-                <article class="tile is-child notification">
-                    <div class="field has-addons">
+        </a>
+        <div class="column is-2">
+           <a href="{{ product.get_absolute_url }}">
+            <p class="title is-6 mar-bottom-0"><b>{{ product.manufacturer }}</b></p>
+            <p class="is-small">{{ product.sap }}</p>
+            <p class="is-small">{{ product.ean }}</p>
+            </a>
+        </div>
+        <div class="column">
+           <a href="{{ product.get_absolute_url }}">
+            <p class="title is-4 mar-bottom-0">{{ product.name }}</p>
+            {% if product.dot != "" %}
+                <p class="is-5">DOT: {{ product.dot }}</p>
+            {% endif %}
+            </a>
+        </div>
+        <div class="column is-3">
+           <a href="{{ product.get_absolute_url }}">
+                <table class="table is-fullwidth">
+                   {% if product.rolling_resistance != "" %}
+                    <tr>
+                        <th>Opory toczenia</th>
+                        <th>{{ product.rolling_resistance }}</th>
+                    </tr>
+                    {% endif %}
+                    {% if product.adhesion != "" %}
+                    <tr>
+                        <th>Przyczepność</th>
+                        <th>{{ product.adhesion }}</th>
+                    </tr>
+                    {% endif %}
+                    {% if product.noise != "" %}
+                    <tr>
+                        <th>Hałas</th>
+                        <th>{{ product.noise }}[db]</th>
+                    </tr>
+                    {% endif %}
+                </table>
+            </a>
+        </div>
+        <div class="column is-1">
+           <a href="{{ product.get_absolute_url }}">
+                <p class="has-text-centered">Dostępność</p>
+                <p class="title is-4 has-text-centered">{{ product.stock }}</p>
+            </a>
+        </div>
+        <div class="column is-1">
+           <a href="{{ product.get_absolute_url }}">
+            {% if request.user.profile.country == "Polska" %}
+                <p class="has-text-centered">Netto</p>
+                <p class="title is-4 has-text-centered">{{ product.price }} zł</p>
+            {% else %}
+                <p class="title is-4 has-text-centered"> {{ product.price_ue }} eur</p>
+            {% endif %}
+            </a>
+        </div>
+        <div class="column is-1">
+                <form action="{% url 'cart:cart_add' product.id %}" method="post">{% csrf_token %}
+                    <div class="field">
                         <div class="control">
-                            <form action="" method="GET">
-                                <input class="input input-search" type="text" name="q" placeholder="search" value="{{ request.GET.q }}">
-                            </form>
-                        </div>
-                        <div class="control">
-                            <button class="button is-outlined btn-search" type="submit"><span class="icon is-small"><i class="fa fa-search"></i></span></button>
+                            {{ cart_product_form }}
                         </div>
                     </div>
-                    {% for product in last_products %}
-                        <div class="column is-marginless">
-                            <a href="{{ product.get_absolute_url }}">
-                                <div class="card">
-                                    <div class="card-image">
-                                        <figure class="image is-4by3">
-                                            <img src="/media/{{ product.image.image }}" alt="Image">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content">
-                                        <div class="media">
-                                            <div class="media-content">
-                                                <p class="subtitle is-6 has-text-centered">{{ product.name }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="content has-text-centered">
-                                           {% if request.user.profile.country == "Polska" %}
-                                                <tr>
-                                                <th><p class="button is-info is-small">{{ product.price }} zł</p></th>
-                                                </tr>
-                                            {% else %}
-                                                <p class="button is-info is-small">{{ product.price_ue }}<span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span></p>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </article>
-            </div>
+                    <button type="submit" class="button is-success is-small"><span class="icon is-small"><i class="fa fa-cart-plus" aria-hidden="true"></i></span></button>
+                </form>
         </div>
     </div>
--->
 </div>
+{% endfor %}
+</section>
+
 {% endblock %}
