@@ -19,9 +19,9 @@ def product_list(request, category_slug=None):
     query = request.GET.get('q')
     if query:
         products = products.filter(
-            Q(name__icontains=query) |
-            Q(sap=query) |
-            Q(ean=query) |
+            Q(name__contains=query) |
+            Q(sap__contains=query) |
+            Q(ean__exact=query) |
             Q(manufacturer=query) |
             Q(model__icontains=query) |
             Q(size__icontains=query)
