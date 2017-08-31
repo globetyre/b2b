@@ -51,10 +51,8 @@
                             {% if cart|length > 0 %}
                                 <a href="{% url 'cart:cart_detail' %}" class="navbar-item">
                                 <div class="tags has-addons">
-                                    <span class="tag is-primary">{{ total_items }}</span>
-                                    <span class="tag is-primary"><span class="icon is-small"><i class="fa fa-shopping-basket"></i></span></span>
-<!--                                    <span class="tag is-primary">{{ total_items }} sztuk{{ total_items|pluralize }}</span>-->
-
+                                    <span class="tag is-info">{{ total_items }}</span>
+                                    <span class="tag is-info"><span class="icon is-small"><i class="fa fa-shopping-basket"></i></span></span>
                                 </div>
                                 </a>
                             {% else %}
@@ -89,11 +87,6 @@
                 <div class="content has-text-centered">
                     <p>
                         <strong>Globe Tyre B2B</strong> by <a href="https://github.com/marcinbarszcz">Marcin Barszcz</a>. The source code is licensed
-                    </p>
-                    <p>
-                        <a class="icon" href="https://github.com/jgthms/bulma">
-                            <i class="fa fa-github"></i>
-                        </a>
                     </p>
                 </div>
             </div>

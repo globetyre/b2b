@@ -7,11 +7,11 @@ from django.contrib.auth.models import User
 from orders.models import Order
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class DashboardView(generic.ListView):
     model = User
-    paginate_by = 25
     template_name = 'account/dashboard.html'
     context_object_name = 'dashboard'
 
@@ -21,5 +21,7 @@ class DashboardView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
-        context["orders"] = Order.objects.filter(buyer=self.request.user)
+        orders_list = Order.objects.filter(buyer=self.request.user)
+
+        context["orders"] = orders_list
         return context

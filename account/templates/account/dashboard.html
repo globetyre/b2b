@@ -9,7 +9,7 @@
             <div class="tile is-parent">
                 <article class="tile is-child">
                     <div class="content">
-                        <article class="message is-primary">
+                        <article class="message">
                             <div class="message-header height-40 has-justify-content-center">
                                 <p>{{ request.user.profile.company_name }}</p>
                             </div>
@@ -70,7 +70,7 @@
     <div class="tile is-parent">
         <article class="tile is-child">
             <div class="content">
-                <article class="message is-info">
+                <article class="message">
                     <div class="message-header">
                         <p class="mar-bottom-0">Zamówienia</p>
                         <span class="tag is-white is-rounded">{{ orders.count }}</span>
@@ -80,18 +80,18 @@
                         <table class="table is-striped is-fullwidth">
                             <thead>
                                 <tr>
-                                    <th>Order number</th>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>Postal code</th>
-                                    <th>City</th>
-                                    <th>Country</th>
+                                    <th>Numer zamówienia</th>
+                                    <th>Imię i nazwisko</th>
+                                    <th>Adres</th>
+                                    <th>Kod pocztowy</th>
+                                    <th>Miassto</th>
+                                    <th>Kraj</th>
                                     <th>Email</th>
-                                    <th>Created</th>
-                                    <th>Tracking number</th>
+                                    <th>Złożono</th>
+                                    <th>Numer paczki</th>
                                     <th>Status</th>
-                                    <th>Invoice</th>
-                                    <th>Detail</th>
+                                    <th>Faktura</th>
+                                    <th>Szczegóły</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,9 +106,9 @@
                                     <td>{{ item.email }}</td>
                                     <td>{{ item.created|date:'d-m-Y H:i' }}</td>
                                     {% if item.tracking_number is None %}
-                                    <td>No tracking number</td>
+                                    <td></td>
                                     {% else %}
-                                    <td><a href="https://tracktrace.dpd.com.pl/parcelDetails?typ=1&p1={{ item.tracking_number }}" target="_blank">DPD</a></td>
+                                    <td><a href="https://tracktrace.dpd.com.pl/parcelDetails?typ=1&p1={{ item.tracking_number }}" target="_blank">{{ item.tracking_number }}</a></td>
                                     {% endif %} {% if item.status == 'New' %}
                                     <td><a class="button is-info is-small">{{ item.status }}</a></td>
                                     {% endif %} {% if item.status == 'Accepted' %}
@@ -128,7 +128,7 @@
                             </tbody>
                         </table>
                         {% else %}
-                        <p>No orders</p>
+                        <p>Brak zamówień do wyświetlenia</p>
                         {% endif %}
                     </div>
                 </article>

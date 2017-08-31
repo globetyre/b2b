@@ -1,152 +1,256 @@
 {% extends "shop/base.html" %}
 {% load widget_tweaks %}
 
-{% block title %}Checkout{% endblock %}
+{% block title %}Zamówienie{% endblock %}
 
 {% block content %}
-<div class="tile is-ancestor">
-    <div class="tile is-vertical">
-        <div class="tile">
-            <div class="tile is-parent is-vertical">
-                <article class="tile is-child notification is-primary">
-                <div class="content">
-                    <p class="title">Your order</p>
-                    <table class="table is-fullwidth">
-                        <thead>
-                            <tr>
-                                <th>Quantity</th>
-                                <th>Product</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for item in cart %}
-                        <tr>
-                            <td>{{ item.quantity }}</td>
-                            <td>{{ item.product.name }}</td>
-                            <td><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.total_price }}</td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    <p class="has-text-right"><strong>Total: <span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ cart.get_total_price }}</strong></p>
-                </article>
-            </div>
+
+<section id="cart-create">
+   <div class="container">
+    <article class="message">
+        <div class="message-header">
+            <p class="title is-4 has-text-white">Zamówienie</p>
         </div>
-    </div>
-    <div class="tile is-parent">
-        <article class="tile is-child notification is-light">
-            <div class="content">
-            <p class="title">Shipping Address</p>
-                {% if request.user.profile.b2b is True %}
-                    <form action="." method="post">{% csrf_token %}
+        <div class="message-body">
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Ilość</th>
+                        <th>Product</th>
+                        <th>Cena jednostkowa</th>
+                        <th class="has-text-right">Cena</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.product.name }}</td>
+                    {% if request.user.profile.country == "Polska" %}
+                        <td>{{ item.price }} zł</td>
+                        <td class="has-text-right">{{ item.total_price }} zł</td>
+                    {% else %}
+                        <td><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.price }}</td>
+                        <td class="has-text-right"><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.total_price }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if request.user.profile.country == "Polska" %}
+                <p class="has-text-right"><strong>Total: {{ cart.get_total_price }} zł</strong></p>
+            {% else %}
+                <p class="has-text-right"><strong>Total: <span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ cart.get_total_price }}</strong></p>
+            {% endif %}
+        </div>
+    </article>
+
+    <article class="message">
+        <div class="message-header">
+            <p class="title is-4 has-text-white">Adres dostawy</p>
+        </div>
+        <div class="message-body">
+            {% if request.user.profile.b2b is True %}
+            <form action="." method="post">{% csrf_token %}
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Imię</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Firs name</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.first_name|add_class:"input input-disabled" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Nazwisko</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Lasst name</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.last_name|add_class:"input input-disabled" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Email</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Email</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.email|add_class:"input input-disabled" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Adres</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Address</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.address|add_class:"input input-disabled" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Kod pocztowy</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Postal code</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.postal_code|add_class:"input input-disabled" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Miasto</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">City</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.city|add_class:"input input-disabled" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Kraj</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Country</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.country|add_class:"input input-disabled" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                        <button type="submit" class="button is-success">Zamów</button>
+                    </div>
+                </div>
+            </form>
+            {% else %}
+            <form action="." method="post">{% csrf_token %}
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Imię</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Country</label>
-                            <div class="control">
-                                {{ form.delivery_price|add_class:"input input-disabled" }}
-                            </div>
-                        </div>
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <button type="submit" class="button is-success is-small">Place order</button>
-                            </div>
-                        </div>
-                    </form>
-                {% else %}
-                    <form action="." method="post">{% csrf_token %}
-                        <div class="field">
-                            <label class="label">Firs name</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.first_name|add_class:"input" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Nazwisko</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Lasst name</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.last_name|add_class:"input" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Email</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Email</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.email|add_class:"input" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Adres</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Address</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.address|add_class:"input" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Kod pocztowy</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Postal code</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.postal_code|add_class:"input" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Miasto</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">City</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.city|add_class:"input" }}
-                            </div>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Kraj</label>
+                    </div>
+                    <div class="field-body">
                         <div class="field">
-                            <label class="label">Country</label>
-                            <div class="control">
+                            <p class="control">
                                 {{ form.country|add_class:"input" }}
-                            </div>
+                            </p>
                         </div>
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <button type="submit" class="button is-success is-small">Place order</button>
-                            </div>
-                        </div>
-                    </form>
-                {% endif %}
-            </div>
-        </article>
+                    </div>
+                </div>
+
+                <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                        <button type="submit" class="button is-success">Zamów</button>
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </article>
     </div>
-</div>
+</section>
 {% endblock %}

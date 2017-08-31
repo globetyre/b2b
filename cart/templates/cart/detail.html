@@ -1,6 +1,6 @@
 {% extends "shop/base.html" %} {% load static %} {% load widget_tweaks %} {% block title %} Koszyk {% endblock %} {% block content %}
-
-<article class="message is-primary">
+<section id="cart-detail">
+<article class="message">
     <div class="message-header">
         <p>Koszyk</p>
     </div>
@@ -18,20 +18,20 @@
             <tbody>
                 {% for item in cart %} {% with product=item.product %}
                 <tr>
-                    <td>{{ product.name }}</td>
+                    <td><p class="is-6">{{ product.name }}</p></td>
                     <td>
                         <form action="{% url 'cart:cart_add' product.id %}" method="post">
                             {{ item.update_quantity_form.quantity }} {{ item.update_quantity_form.update }}
-                            <button class="button is-warning is-small" type="submit">Aktualizuj</button> {% csrf_token %}
+                            <button class="button is-small" type="submit"><span class="icon"><i class="fa fa-refresh" aria-hidden="true"></i></span></button> {% csrf_token %}
                         </form>
                     </td>
-                    <td><a href="{% url 'cart:cart_remove' product.id %}"><span class="icon"><i class="fa fa-trash"></i></span></a></td>
+                    <td><a href="{% url 'cart:cart_remove' product.id %}" class="button is-danger is-small"><span class="icon"><i class="fa fa-trash"></i></span></a></td>
                     {% if request.user.profile.country == "Polska" %}
-                        <td>{{ item.price }} zł</td>
-                        <td>{{ item.total_price }} zł</td>
+                        <td><p>{{ item.price }} zł</p></td>
+                        <td><p>{{ item.total_price }} zł</p></td>
                     {% else %}
-                        <td><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.price_ue }}</td>
-                        <td><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.total_price }}</td>
+                        <td><p><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.price_ue }}</p></td>
+                        <td><p><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.total_price }}</p></td>
                     {% endif %}
                 </tr>
                 {% endwith %} {% endfor %}
@@ -43,9 +43,10 @@
             </tbody>
         </table>
         <p class="has-text-right">
-            <a href="{% url 'shop:product_list' %}" class="button is-light">Powrót do sklepu</a>
+            <a href="{% url 'shop:product_list' %}" class="button">Powrót do sklepu</a>
             <a href="{% url 'orders:order_create' %}" class="button is-success">Zamów</a>
         </p>
     </div>
 </article>
+</section>
 {% endblock %}
