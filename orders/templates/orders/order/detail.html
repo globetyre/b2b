@@ -1,5 +1,5 @@
 {% extends "shop/base.html" %}
-{% block title %} Order {{ order.id }} {{ block.super }} {% endblock %}
+{% block title %} Zamówienie {{ order.id }} {{ block.super }} {% endblock %}
 
 
 {% block content %}
@@ -27,19 +27,19 @@
         <div class="container is-fluid">
 <article class="message">
   <div class="message-header">
-    <h1 class="title has-text-light">Order number: {{ order.id }}</h1>
+    <h1 class="title has-text-light">Zamówinie {{ order.id }}</h1>
   </div>
 </article>
             <div class="columns" id="order_detail_panel">
                 <div class="column">
                     <article class="message">
                         <div class="message-header">
-                            <p>Invoice</p>
+                            <p>Faktura</p>
                         </div>
                         <div class="message-body">
                             <table class="table is-fullwidth">
                                 <tr>
-                                    <th>Name</th>
+                                    <th>Imię i nazwisko</th>
                                     <td>{{ order.buyer.first_name }} {{ order.buyer.last_name }}</td>
                                 </tr>
                                 <tr>
@@ -47,35 +47,35 @@
                                     <td><a href="mailto:{{ order.buyer.email }}">{{ order.buyer.email }}</a></td>
                                 </tr>
                                 <tr>
-                                    <th>Company</th>
+                                    <th>Firma</th>
                                     <td>{{ order.buyer.profile.company_name }}</a></td>
                                 </tr>
                                 <tr>
-                                    <th>UStID</th>
+                                    <th>NIP</th>
                                     <td>{{ order.buyer.profile.nip }}</a></td>
                                 </tr>
                                 <tr>
-                                    <th>Address</th>
+                                    <th>Adres</th>
                                     <td>{{ order.buyer.profile.address }}</a></td>
                                 </tr>
                                 <tr>
-                                    <th>Postal Code</th>
+                                    <th>Kod pocztowy</th>
                                     <td>{{ order.buyer.profile.postal_code }}</a></td>
                                 </tr>
                                 <tr>
-                                    <th>City</th>
+                                    <th>Miasto</th>
                                     <td>{{ order.buyer.profile.city }}</a></td>
                                 </tr>
                                 <tr>
-                                    <th>Country</th>
+                                    <th>Kraj</th>
                                     <td>{{ order.buyer.profile.country }}</a></td>
                                 </tr>
                                 <tr>
-                                    <th>Print order</th>
+                                    <th>Drukuj zamówienie</th>
                                     <td><a href="#"  onclick="printElem('order_detail_panel');"><span class="icon is-small"><i class="fa fa-print"></i></span></a></td>
                                 </tr>
                                 <tr>
-                                    <th>Invoice</th>
+                                    <th>Faktura</th>
                                     {% if order.invoice %}
                                        <td><a href="/media/{{ order.invoice }}" target="_blank"><span class="icon is-small"><i class="fa fa-download"></i></span></a></td>
                                     {% else %}
@@ -89,16 +89,16 @@
                 <div class="column">
                     <article class="message">
                         <div class="message-header">
-                            <p>Shipping</p>
+                            <p>Dostawa</p>
                         </div>
                         <div class="message-body">
                             <table class="table is-fullwidth">
                                 <tr>
-                                    <th>Created</th>
+                                    <th>Utworzono</th>
                                     <td>{{ order.created }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Customer</th>
+                                    <th>Klient</th>
                                     <td>{{ order.first_name }} {{ order.last_name }}</td>
                                 </tr>
                                 <tr>
@@ -106,7 +106,7 @@
                                     <td><a href="mailto:{{ order.email }}">{{ order.email }}</a></td>
                                 </tr>
                                 <tr>
-                                    <th>Address</th>
+                                    <th>Adres</th>
                                     <td>{{ order.address }}, {{ order.postal_code }} {{ order.ci }}
                                     </td>
                                 </tr>
@@ -126,11 +126,10 @@
                                     {% endif %}
                                 </tr>
                                 <tr>
-                                    <th>Tracking Number</th>
+                                    <th>Numer przesyłki</th>
                                     {% if order.tracking_number is None %}
-                                        <th>No tracking number</th>
                                     {% else %}
-                                        <th><a href="https://tracktrace.dpd.com.pl/parcelDetails?typ=1&p1={{ order.tracking_number }}" target="_blank">DPD</a></th>
+                                        <th><a href="https://tracktrace.dpd.com.pl/parcelDetails?typ=1&p1={{ order.tracking_number }}" target="_blank">{{ order.tracking_number }}</a></th>
                                     {% endif %}
                                 </tr>
                             </table>
@@ -140,15 +139,15 @@
                 <div class="column is-5">
                     <article class="message">
                         <div class="message-header">
-                            <p>Detail</p>
+                            <p>Szczegóły</p>
                         </div>
                         <div class="message-body">
                             <table class="table is-fullwidth">
                                 <thead>
                                     <tr>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
+                                        <th>Produkt</th>
+                                        <th>Cena</th>
+                                        <th>Ilość</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
@@ -156,14 +155,14 @@
                                     {% for item in order.items.all %}
                                     <tr>
                                         <td><small>{{ item.product.name }}</small></td>
-                                        <td class="num">${{ item.price }}</td>
+                                        <td class="num">{{ item.price }} PLN</td>
                                         <td class="num">{{ item.quantity }}</td>
-                                        <td class="num">${{ item.get_cost }}</td>
+                                        <td class="num">{{ item.get_cost }} PLN</td>
                                     </tr>
                                     {% endfor %}
                                     <tr class="total">
                                         <td colspan="3">Total</td>
-                                        <td class="num">${{ order.get_total_cost }}</td>
+                                        <td class="num">{{ order.get_total_cost }} PLN</td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -8,8 +8,6 @@ from ftplib import FTP
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
-from orders.models import DeliveryInfo
-
 @login_required
 def product_list(request, category_slug=None):
     category = None

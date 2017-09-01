@@ -26,8 +26,8 @@ class Images(models.Model):
     class Meta:
         ordering = ('slug',)
         index_together = (('id', 'slug'),)
-        verbose_name = 'Image'
-        verbose_name_plural = 'Images'
+        verbose_name = 'Zdjęcie'
+        verbose_name_plural = 'Zdjęcia'
 
     def __str__(self):
         return self.slug

@@ -35,12 +35,6 @@ def order_detail(obj):
 	return '<a href="{}"><i class="fa fa-eye" aria-hidden="true"></i></a>'.format(reverse('orders:order_detail', args=[obj.id]))
 order_detail.allow_tags = True
 
-class DeliveryInfoAdmin(admin.ModelAdmin):
-    list_display = ['name', 'image', 'delivery_time', 'delivery_price']
-    search_fields = ['name']
-    prepopulated_fields = {'slug': ('name',)}
-admin.site.register(DeliveryInfo, DeliveryInfoAdmin)
-
 class OrderAdmin(admin.ModelAdmin):
 	list_display = ['id', 'buyer', 'first_name', 'last_name', 'email', 'address', 'postal_code', 'city', 'created', 'updated', 'tracking_number', 'status', 'invoice', order_detail]
 	list_filter = ['created', 'updated', 'status']
@@ -48,3 +42,15 @@ class OrderAdmin(admin.ModelAdmin):
 	inlines = [OrderItemInline]
 	actions = [export_to_csv]
 admin.site.register(Order, OrderAdmin)
+
+class StatusAdmin(admin.ModelAdmin):
+    list_display = ['name', 'priority']
+    search_fields = ['name']
+    prepopulated_fields = {'slug': ('name',)}
+admin.site.register(Status, StatusAdmin)
+
+#class DeliveryInfoAdmin(admin.ModelAdmin):
+#    list_display = ['name', 'image', 'delivery_time', 'delivery_price']
+#    search_fields = ['name']
+#    prepopulated_fields = {'slug': ('name',)}
+#admin.site.register(DeliveryInfo, DeliveryInfoAdmin)
