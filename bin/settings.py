@@ -33,14 +33,14 @@ ALLOWED_HOSTS = ['*']
 CART_SESSION_ID = 'cart'
 
 # mail
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'globetyre1.nazwa.pl'
-# EMAIL_HOST_USER = 'sklep@globetyre1.nazwa.pl'
-# EMAIL_HOST_PASSWORD = 'Globetyre2013'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'globetyre1.nazwa.pl'
+EMAIL_HOST_USER = 'sklep@globetyre1.nazwa.pl'
+EMAIL_HOST_PASSWORD = 'Globetyre2013'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # login
 

@@ -4,9 +4,10 @@ from .forms import OrderCreateForm
 from cart.cart import Cart
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404
-from .tasks import order_created
+from .mail import order_created, order_placed
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from account.models import Profile
 
 def order_create(request):
 	deliveryinfo = DeliveryInfo.objects.all()
@@ -22,6 +23,8 @@ def order_create(request):
 			# clear the cart
 			cart.clear()
 			# launch asynchronous task
+			order_created(order.id)
+			order_placed(order.id)
 #			order_created.delay(order.id)
 		return render(request, 'orders/order/created.html', {'order': order})
 	else:

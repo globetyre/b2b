@@ -1,0 +1,81 @@
+{% autoescape off %}
+<br>
+Witaj <b>{{ order.first_name }} {{ order.last_name }}</b>,
+<br>
+<h3>Poniższy mail jest potwierdzeniem złożenia zamówienia nr {{ order.id }}</h3>
+
+<table style="width:100%">
+    <tr>
+        <td><b>Data złożenia zamówienia:</b></td>
+        <td style="text-align: right">{{ order.created }}</td>
+    </tr>
+</table>
+<br>
+<table style="width:100%; border: 1px solid #444; padding: 10px;">
+    <tr>
+        <td style="padding: 5px;"><b>Dane do faktury</b></td>
+        <td style="padding: 5px;"><b>Nazwa</b></td>
+        <td style="padding: 5px;"><b>NIP</b></td>
+        <td style="padding: 5px;"><b>Adres</b></td>
+        <td style="padding: 5px;"><b>Miasto</b></td>
+        <td style="padding: 5px;"><b>Kraj</b></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td style="adding: 5px;">{{ order.buyer.profile.company_name }}</td>
+        <td style="padding: 5px;">{{ order.buyer.profile.nip }}</td>
+        <td style="padding: 5px;">{{ order.buyer.profile.address }}</td>
+        <td style="padding: 5px;">{{ order.buyer.profile.city }}</td>
+        <td style="padding: 5px;">{{ order.buyer.profile.country }}</td>
+    </tr>
+</table>
+<br>
+<table style="width:100%; border: 1px solid #444; padding: 10px;">
+    <tr>
+        <td style="padding: 5px;"><b>Adres dostawy</b></td>
+        <td style="padding: 5px;"><b>Ulica</b></td>
+        <td style="padding: 5px;"><b>Kod pocztowy</b></td>
+        <td style="padding: 5px;"><b>Miasto</b></td>
+        <td style="padding: 5px;"><b>Kraj</b></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td style="padding: 5px;">{{ order.address }}</td>
+        <td style="padding: 5px;">{{ order.postal_code }}</td>
+        <td style="padding: 5px;">{{ order.city }}</td>
+        <td style="padding: 5px;">{{ order.country }}</td>
+    </tr>
+    <tr>
+        <td colspan="3"><b>Czas dostawy</b></td>
+        <td style="text-align: right"><b>{{ order.buyer.profile.delivery_time }} dni</b></td>
+    </tr>
+</table>
+<br>
+<table style="width:100%; border: 1px solid #444; padding: 10px;">
+   <tr>
+       <td style="padding: 5px;"><b>Nazwa</b></td>
+       <td style="padding: 5px;"><b>Cena jednostkowa</b></td>
+       <td style="padding: 5px;"><b>Ilość</b></td>
+       <td style="padding: 5px;"><b>Cena</b></td>
+   </tr>
+    {% for item in order.items.all %}
+    <tr>
+        <td style="padding: 5px;"><small>{{ item.product.name }}</small></td>
+        <td style="padding: 5px;"><small>{{ item.price }} PLN</small></td>
+        <td style="padding: 5px;"><small>{{ item.quantity }}</small></td>
+        <td style="padding: 5px;"><small>{{ item.get_cost }} PLN</small></td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<table style="width:100%; border: 1px solid #444; padding: 10px;">
+    <tr>
+        <td colspan="3"><b>Total</b></td>
+        <td style="text-align: right"><b>{{ order.get_total_cost }} PLN</b></td>
+    </tr>
+</table>
+
+<br>
+Pozdrawiam,
+<br>
+<b>Globe Tyre</b> {% endautoescape %}
