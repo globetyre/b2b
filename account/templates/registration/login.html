@@ -27,12 +27,12 @@
 								</figure>
 								<hr>
 							    <form action="{% url 'login' %}" method="post">{% csrf_token %}
-								    <label class="label">Username</label>
+								    <label class="label">Użytkownik</label>
 		                            <p class="control">
 		                                {{ form.username|add_class:"input" }}
 		                            </p>
 
-		                            <label class="label">Password</label>
+		                            <label class="label">Hasło</label>
 		                            <p class="control">
 		                                {{ form.password|add_class:"input" }}
 		                            </p>
@@ -43,7 +43,7 @@
 							        </p>
 							    </form>
 							    <br>
-							    <p class="has-text-centered"><small>If you do not have access to our B2B system yet, please contact our Customer Service.</small></p>
+							    <p class="has-text-centered"><small>Jeżeli nie masz jeszcze dostępu do naszego systemu B2B skontaktuj się z Biurem Obsługi Klienta.</small></p>
 								<p class="has-text-centered"><small><span class="icon is-small"><i class="fa fa-phone"></i></span> +48 533 377 107</small> |
 								<small><span class="icon is-small"><i class="fa fa-envelope"></i></span> patryk@globetyre.pl</small></p>
 	                        </div>
