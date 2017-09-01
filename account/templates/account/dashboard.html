@@ -108,11 +108,11 @@
                                     {% if item.status_id == 1 %}
                                     <td><a class="button is-info is-small">{{ item.status }}</a></td>
                                     {% endif %} {% if item.status_id == 2 %}
-                                    <td><a class="button is-primary is-small">{{ item.status.id }}</a></td>
+                                    <td><a class="button is-primary is-small">{{ item.status }}</a></td>
                                     {% endif %} {% if item.status_id == 3 %}
-                                    <td><a class="button is-success is-small">{{ item.status_name }}</a></td>
+                                    <td><a class="button is-success is-small">{{ item.status }}</a></td>
                                     {% endif %} {% if item.status_id == 4 %}
-                                    <td><a class="button is-danger is-small">{{ item.status_name }}</a></td>
+                                    <td><a class="button is-danger is-small">{{ item.status }}</a></td>
                                     {% endif %}
                                     {% if item.tracking_number is None %}
                                     <td></td>
