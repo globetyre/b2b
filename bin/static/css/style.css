@@ -69,7 +69,7 @@ a.navbar-item.is-active,
 }
 
 #id_quantity {
-/*    margin-bottom: 1rem;*/
+    /*    margin-bottom: 1rem;*/
 }
 
 .top-bar {
@@ -218,16 +218,28 @@ p.is-small {
 }
 
 input[name=q] {
-width: 300px;
+    width: 300px;
 }
 
 .weight-normal th {
     font-weight: normal;
-    padding: 0.2em 0.3em;
+    padding: 0.2em 0.3em !important;
+    border: 0 !important;
+}
+
+.th-ue {
+    border: 0 !important;
+    padding: 0.2em 0.1em !important;
+    font-weight: normal !important;
+}
+
+.table-ue {
+    width: 60% !important;
 }
 
 .icon-season {
     text-align: center;
+    margin-bottom: 0 !important;
 }
 
 .summer {

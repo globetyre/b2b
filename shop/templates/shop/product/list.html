@@ -6,7 +6,7 @@
 <section id="product-list">
 <article class="message">
     <div class="message-header">
-        <p>Promocja</p>
+        <p>Promocje</p>
     </div>
     <div class="message-body">
         <div class="columns is-centered">
@@ -43,7 +43,40 @@
         </div>
     </div>
 </article>
-{% for product in products %}
+
+<div class="tile is-ancestor">
+    <div class="tile is-vertical is-2">
+        <div class="tile">
+            <div class="tile is-parent">
+                <article class="tile is-child">
+                    <div class="content">
+                        <article class="message">
+                            <div class="message-header height-40">
+                                <p>Filtruj</p>
+                            </div>
+                            <div class="message-body">
+                                <table class="table is-fullwidth">
+                                   <tr>
+                                       <th>Sezon</th>
+                                   </tr>
+                                    <tr>
+                                        <th><a href="#"><span class="icon is-small summer"><i class="fa fa-sun-o" aria-hidden="true"></i></span> Lato</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th><a href="#"><span class="icon is-small winter"><i class="fa fa-snowflake-o" aria-hidden="true"></i></span> Zima</a></th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </article>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <div class="tile is-parent">
+        <article class="tile is-child">
+            <div class="content">
+                {% for product in products %}
 <div class="notification">
     <div class="columns is-1">
         <a href="{{ product.image.image.url }}" target="_blank">
@@ -67,61 +100,32 @@
         <div class="column">
 <!--           <a href="{{ product.get_absolute_url }}">-->
             <p class="title is-5 mar-bottom-0">{{ product.name }}</p>
-            <table class="table weight-normal">
+            <table class="table table-ue">
                     <tr>
                         {% if product.rolling_resistance != "" %}
-                            <th>Opory toczenia:</th>
-                            <th>{{ product.rolling_resistance }}</th>
+                            <th class="th-ue">Opory toczenia: {{ product.rolling_resistance }}</th>
                         {% endif %}
                         {% if product.adhesion != "" %}
-                            <th>Przyczepność:</th>
-                            <th>{{ product.adhesion }}</th>
+                            <th class="th-ue">Przyczepność: {{ product.adhesion }}</th>
                         {% endif %}
                         {% if product.noise != "" %}
-                            <th>Hałas:</th>
-                            <th>{{ product.noise }}[db]</th>
+                            <th class="th-ue">Hałas: {{ product.noise }}[db]</th>
                         {% endif %}
                     </tr>
                     <tr>
                     {% if product.dot != "" %}
-                        <th>DOT: {{ product.dot }}</th>
+                        <th class="th-ue">DOT: {{ product.dot }}</th>
                     {% endif %}
                     </tr>
                 </table>
         </div>
-<!--
-        <div class="column is-2">
-           <a href="{{ product.get_absolute_url }}">
-                <table class="table is-fullwidth">
-                   {% if product.rolling_resistance != "" %}
-                    <tr>
-                        <th>Opory toczenia</th>
-                        <th>{{ product.rolling_resistance }}</th>
-                    </tr>
-                    {% endif %}
-                    {% if product.adhesion != "" %}
-                    <tr>
-                        <th>Przyczepność</th>
-                        <th>{{ product.adhesion }}</th>
-                    </tr>
-                    {% endif %}
-                    {% if product.noise != "" %}
-                    <tr>
-                        <th>Hałas</th>
-                        <th>{{ product.noise }}[db]</th>
-                    </tr>
-                    {% endif %}
-                </table>
-            </a>
-        </div>
--->
        <div class="column is-1">
 <!--                <p class="title is-4 has-text-centered">>20</p>-->
             <p class="icon-season"><span class="icon is-medium summer"><i class="fa fa-sun-o" aria-hidden="true"></i></span></p>
            <p class="icon-season"><span class="icon is-medium icon-season winter"><i class="fa fa-snowflake-o" aria-hidden="true"></i></span></p>
         </div>
-        <div class="column is-2">
-                <p class="has-text-centered">Dostępność</p>
+        <div class="column is-1">
+                <p class="has-text-centered mar-bottom-0">Dostępność</p>
                 {% if product.stock >= 20 %}
                 <p class="title is-4 has-text-centered">>20</p>
                 {% else %}
@@ -131,7 +135,7 @@
         <div class="column is-1">
 <!--           <a href="{{ product.get_absolute_url }}">-->
             {% if request.user.profile.country == "Polska" %}
-                <p class="has-text-centered">Netto</p>
+                <p class="has-text-centered mar-bottom-0">Netto</p>
                 <p class="title is-4 has-text-centered mar-bottom-0">{{ product.price }} zł</p>
             {% else %}
                 <p class="title is-4 has-text-centered mar-bottom-0"> {{ product.price_ue }} eur</p>
@@ -141,7 +145,7 @@
         <div class="column is-1">
 <!--           <a href="{{ product.get_absolute_url }}">-->
             {% if request.user.profile.country == "Polska" %}
-                <p class="has-text-centered">Brutto</p>
+                <p class="has-text-centered mar-bottom-0">Brutto</p>
                 <p class="title is-4 has-text-centered mar-bottom-0">{{ product.brutto_pl }} zł</p>
             {% else %}
                 <p class="title is-4 has-text-centered mar-bottom-0"> {{ product.brutto_eu }} eur</p>
@@ -161,6 +165,9 @@
     </div>
 </div>
 {% endfor %}
+            </div>
+            </article>
+    </div>
 </section>
 
 {% endblock %}

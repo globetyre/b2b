@@ -7,8 +7,8 @@
 
 <div class="tile is-ancestor">
     <div class="tile is-parent">
-        <article class="tile is-child notification is-info">
-            <p class="title"><a class="button is-info" href="/"><span class="icon"><i class="fa fa-arrow-left" aria-hidden="true"></i></span></a> {{ product.name }}</p>
+        <article class="tile is-child notification is-dark">
+            <p class="title"><a class="button is-dark" href="/"><span class="icon"><i class="fa fa-arrow-left" aria-hidden="true"></i></span></a> {{ product.name }}</p>
         </article>
     </div>
 </div>
@@ -27,47 +27,47 @@
                 <article class="tile is-child notification">
                     <table class="table is-fullwidth">
                         <tr>
-                            <th class="is-size-7">Manufacturer</th>
-                            <th>{{ product.manufacturer }}</th>
+                            <th class="title is-4">Producent</th>
+                            <th class="title is-4">{{ product.manufacturer }}</th>
                         </tr>
                         <tr>
-                            <th>Model</th>
-                            <th>{{ product.model }}</th>
+                            <th class="title is-4">Model</th>
+                            <th class="title is-4">{{ product.model }}</th>
                         </tr>
                         <tr>
-                            <th>Size</th>
-                            <th>{{ product.size }}</th>
+                            <th class="title is-4">Rozmiar</th>
+                            <th class="title is-4">{{ product.size }}</th>
                         </tr>
                         <tr>
-                            <th class="is-size-7">SAP</th>
-                            <th>{{ product.sap }}</th>
+                            <th class="title is-4">SAP</th>
+                            <th class="title is-4">{{ product.sap }}</th>
                         </tr>
                         <tr>
-                            <th>EAN</th>
-                            <th>{{ product.ean }}</th>
+                            <th class="title is-4">EAN</th>
+                            <th class="title is-4">{{ product.ean }}</th>
                         </tr>
                     </table>
                 </article>
                 <article class="tile is-child notification">
                     <table class="table is-fullwidth">
                         <tr>
-                            <th>Load index</th>
+                            <th>Indeks ładowności</th>
                             <th>{{ product.load_index }}</th>
                         </tr>
                         <tr>
-                            <th>Speed index</th>
+                            <th>Indeks prędkości</th>
                             <th>{{ product.speed_index }}</th>
                         </tr>
                         <tr>
-                            <th>Rolling resistance</th>
+                            <th>Opór toczenia</th>
                             <th>{{ product.rolling_resistance }}</th>
                         </tr>
                         <tr>
-                            <th>Adhesion</th>
+                            <th>Przyczepność</th>
                             <th>{{ product.adhesion }}</th>
                         </tr>
                         <tr>
-                            <th>Noise</th>
+                            <th>Hałas</th>
                             <th>{{ product.noise }}[db]</th>
                         </tr>
                         <tr>
@@ -83,14 +83,14 @@
         <article class="tile is-child notification">
             <div class="content">
                 <div class="content has-text-centered">
-                    <article class="message is-info">
+                    <article class="message is-dark">
                         <div class="message-body">
                            {% if request.user.profile.country == "Polska" %}
                             <p class="title is-1 no-mar-bottom"><b>{{ product.price }}</b> zł</p>
                             {% else %}
                             <p class="title is-1 no-mar-bottom"><b>{{ product.price_ue }}</b><span class="icon is-medium"><i class="fa fa-eur" aria-hidden="true"></i></span></p>
                             {% endif %}
-                            <span class="tag is-info is-medium"><p>Available: {{ product.stock }} pcs</p></span>
+                            <span class="tag is-dark is-medium"><p>Dostępne: {{ product.stock }} pcs</p></span>
                             <p>
                                 <form action="{% url 'cart:cart_add' product.id %}" method="post">{% csrf_token %}
                                     <div class="control">
@@ -101,11 +101,11 @@
                                         </div>
                                         <div class="control">
                                             <p class="field has-text-right">
-                                                <button type="submit" class="button is-info btn-add-cart">
+                                                <button type="submit" class="button is-dark btn-add-cart">
                                                         <span class="icon">
                                                       <i class="fa fa-cart-plus"></i>
                                                     </span>
-                                                        <span>Add to cart</span>
+                                                        <span>Dodaj do koszyka</span>
                                                     </button>
                                             </p>
                                         </div>
