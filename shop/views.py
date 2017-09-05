@@ -14,6 +14,7 @@ def product_list(request, category_slug=None):
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
     last_products = Product.objects.filter(available=True).order_by('-updated')[:5]
+    sales = Product.objects.filter(sale=True).order_by('-updated')[:5]
     query = request.GET.get('q')
     if query:
         products = products.filter(
@@ -28,14 +29,13 @@ def product_list(request, category_slug=None):
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
     cart_product_form = CartAddProductForm()
-    return render(request, 'shop/product/list.html', {'category': category, 'categories': categories, 'products': products, 'cart_product_form': cart_product_form, 'last_products': last_products})
+    return render(request, 'shop/product/list.html', {'category': category, 'categories': categories, 'products': products, 'cart_product_form': cart_product_form, 'last_products': last_products, 'sales': sales})
 
 @login_required
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
     cart_product_form = CartAddProductForm()
-    deliveryinfo = DeliveryInfo.objects.all()
-    return render(request, 'shop/product/detail.html', {'product': product, 'cart_product_form': cart_product_form, 'deliveryinfo': deliveryinfo})
+    return render(request, 'shop/product/detail.html', {'product': product, 'cart_product_form': cart_product_form})
 
 # pobieranie stanów
 def get_stan(request):

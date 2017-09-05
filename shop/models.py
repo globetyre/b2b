@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from decimal import Decimal
 
 
 class Category(models.Model):
@@ -56,6 +57,7 @@ class Product(models.Model):
     available = models.BooleanField(default=True, verbose_name="Dostępne")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Dodano")
     updated = models.DateTimeField(auto_now=True, verbose_name="Aktualizowano")
+    sale = models.BooleanField(default=False, verbose_name="Promocja")
 
     class Meta:
         ordering = ('name',)
@@ -68,3 +70,11 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.id, self.slug])
+
+    def brutto_pl(self):
+        return round((float(self.price) * 1.23), 2)
+    brutto_pl.short_description = 'Brutto [PL]'
+
+    def brutto_eu(self):
+        return round((float(self.price_ue) * 1.23), 2)
+    brutto_eu.short_description = 'Brutto [EU]'

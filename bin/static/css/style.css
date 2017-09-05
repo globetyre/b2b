@@ -69,7 +69,7 @@ a.navbar-item.is-active,
 }
 
 #id_quantity {
-    /*    width: 100;*/
+/*    margin-bottom: 1rem;*/
 }
 
 .top-bar {
@@ -193,6 +193,12 @@ p.is-small {
     margin-top: .4rem;
 }
 
+#product-list .box {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    min-height: 114px;
+}
+
 .bg-white {
     background-color: #fff;
 }
@@ -213,4 +219,26 @@ p.is-small {
 
 input[name=q] {
 width: 300px;
+}
+
+.weight-normal th {
+    font-weight: normal;
+    padding: 0.2em 0.3em;
+}
+
+.icon-season {
+    text-align: center;
+}
+
+.summer {
+    color: #f1c40f;
+}
+
+.winter {
+    color: #3498db;
+}
+
+.no-padding-th {
+    padding: 0 !important;
+    padding-top: 0.3rem !important;
 }
