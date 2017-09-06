@@ -254,3 +254,22 @@ input[name=q] {
     padding: 0 !important;
     padding-top: 0.3rem !important;
 }
+
+span.search-tip {
+    background: #fff;
+    color: #4b162f;
+    font-size: 12px;
+    width: 100%;
+/*    letter-spacing: 1px;*/
+/*    line-height: 20px;*/
+    position: absolute;
+    top: 60px;
+    left: 0;
+    display: none;
+    padding: 5px 10px;
+}
+
+a.search-box:hover span {
+    display: block;
+    z-index: 1
+}
