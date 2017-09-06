@@ -240,6 +240,7 @@ input[name=q] {
 .icon-season {
     text-align: center;
     margin-bottom: 0 !important;
+    margin-top: 15px;
 }
 
 .summer {
