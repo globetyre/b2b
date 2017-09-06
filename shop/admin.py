@@ -14,10 +14,10 @@ class ImagesAdmin(admin.ModelAdmin):
 admin.site.register(Images, ImagesAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['image', 'name', 'slug', 'ean', 'price', 'price_ue', 'stock', 'available', 'created', 'updated', 'brutto_pl', 'brutto_eu', 'sale']
+    list_display = ['image', 'search_field', 'name', 'slug', 'ean', 'price', 'price_ue', 'stock', 'available', 'created', 'updated', 'brutto_pl', 'brutto_eu', 'sale']
     list_display_links = ["name"]
     list_filter = ['available', 'created', 'updated']
     list_editable = ['price', 'price_ue', 'stock', 'available', 'image', 'sale']
-    search_fields = ['name', 'ean', 'slug']
+    search_fields = ['search_field']
     prepopulated_fields = {'slug': ('name',)}
 admin.site.register(Product, ProductAdmin)

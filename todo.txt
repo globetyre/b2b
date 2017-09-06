@@ -1,4 +1,5 @@
 + wysyłanie maili bez celery do sklepu i klienta // https://farhadurfahim.github.io/post/django-registration-with-confirmation-email/
 + statusy jako model
 - szukanie po wszystkim
+- dodać pole szukajka do modelu
 

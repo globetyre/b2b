@@ -58,6 +58,7 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="Dodano")
     updated = models.DateTimeField(auto_now=True, verbose_name="Aktualizowano")
     sale = models.BooleanField(default=False, verbose_name="Promocja")
+    search_field = models.CharField(max_length=300, verbose_name="Szukajka", null=True, blank=True)
 
     class Meta:
         ordering = ('name',)
