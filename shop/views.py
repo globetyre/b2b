@@ -81,14 +81,14 @@ def get_stan(request):
         rolling_resistance = row[8]
         adhesion = row[9]
         noise = row[10]
-        dot = row[15]
+        dot = '20'+row[15][-2:]
         stock = row[11]
         price = row[12].replace(',','.')
         price_ue = row[16].replace(',','.')
         available = True
         created = datetime.datetime.now()
         updated = datetime.datetime.now()
-        search_field = 'SAP'+row[3]+'EAN'+row[4]+''+row[1]+''+row[2].replace(' ','')+''+row[5].replace('/','').replace('R','')+''+row[7]+''+row[6]+'DOT'+row[15]
+        search_field = 'SAP'+sap+'EAN'+ean+''+manufacturer+''+model.replace(' ','')+''+size.replace('/','').replace('R','')+''+load_index+''+speed_index+'DOT'+dot
 
         cursor.execute('INSERT OR IGNORE INTO shop_product (name, slug, image_id, sap, ean, manufacturer, model, size, speed_index, load_index, rolling_resistance, adhesion, noise, dot, price, stock, available, created, updated, category_id, price_ue, search_field) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (name, slug,image_id , sap, ean, manufacturer, model, size, speed_index, load_index, rolling_resistance, adhesion, noise, dot, price, stock, available, created, updated, category_id, price_ue, search_field))
         cursor.execute('UPDATE shop_product SET stock=? WHERE sap=?', (stock,sap))
