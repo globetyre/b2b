@@ -3,4 +3,5 @@
 + szukanie po wszystkim
 + dodać pole szukajka do modelu
 - sezon po rozmiarze i po producencie
+- magazyny: Allegro, GlobeTyre, PlatformaOpon, WojnaOpon
 
