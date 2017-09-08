@@ -8,6 +8,9 @@ from ftplib import FTP
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
+from django.core import serializers
+from django.http import HttpResponse
+
 @login_required
 def product_list(request, category_slug=None):
     category = None
@@ -37,6 +40,12 @@ def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
     cart_product_form = CartAddProductForm()
     return render(request, 'shop/product/detail.html', {'product': product, 'cart_product_form': cart_product_form})
+
+@login_required
+def jsonlist(request):
+    products_list = Product.objects.filter(available=True)
+    json_list = serializers.serialize('json', products_list)
+    return HttpResponse(json_list, content_type="application/json")
 
 # pobieranie stanów
 def get_stan(request):
@@ -107,3 +116,25 @@ def get_stan(request):
     connection.commit()
     connection.close()
     return render(request, 'shop/product/get.html')
+
+#class ProductListJson(BaseDatatableView):
+#    columns = ['obrazek', 'nazwa_zwyczajowa', 'rodzaj_narzedzia', 'producent','model', 'opis', 'pk']
+#    order_columns = columns
+#
+#    @method_decorator(login_required(login_url='/login/'))
+#    def dispatch(self, request, *args, **kwargs):
+#        return super(NarzedziaListJson, self).dispatch(request, *args, **kwargs)
+#
+#    def get_initial_queryset(self, **kwargs):
+#        query = Narzedzia.objects.filter(available=True, ownership=False)
+#        return query
+#
+#    def render_column(self, row, column):
+#        if column == 'obrazek':
+#            return format(row.obrazek);
+#
+#        # We want to render user as a custom column
+#        if column == 'user':
+#            return '{0} {1}'.format(row.user_firstname, row.user_lastname)
+#        else:
+#            return super(NarzedziaListJson, self).render_column(row, column)
