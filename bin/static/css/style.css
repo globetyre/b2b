@@ -174,7 +174,7 @@ p.is-small {
 }
 
 #product-list .is-success {
-    width: 100%;
+/*    width: 100%;*/
 }
 
 #product-list .notification {
@@ -273,4 +273,8 @@ span.search-tip {
 a.search-box:hover span {
     display: block;
     z-index: 1
+}
+
+.mar-top {
+    margin-top: 15px;
 }

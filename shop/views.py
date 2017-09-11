@@ -7,15 +7,24 @@ import csv
 from ftplib import FTP
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-
+#import json
 from django.core import serializers
 from django.http import HttpResponse
+#from django.http import JsonResponse
+
+from django.utils.decorators import method_decorator
+import simplejson as simplejson
+from django.views import generic
+from django_datatables_view.base_datatable_view import BaseDatatableView
+
+
 
 @login_required
 def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
+    order_by = request.GET.get('order_by', 'id')
+    products = Product.objects.filter(available=True).order_by(order_by)
     last_products = Product.objects.filter(available=True).order_by('-updated')[:5]
     sales = Product.objects.filter(sale=True).order_by('-updated')[:5]
     query = request.GET.get('q')
@@ -41,11 +50,25 @@ def product_detail(request, id, slug):
     cart_product_form = CartAddProductForm()
     return render(request, 'shop/product/detail.html', {'product': product, 'cart_product_form': cart_product_form})
 
-@login_required
-def jsonlist(request):
-    products_list = Product.objects.filter(available=True)
-    json_list = serializers.serialize('json', products_list)
-    return HttpResponse(json_list, content_type="application/json")
+#class jsonlist(BaseDatatableView):
+#    model = Product
+#    columns = ['image', 'manufacturer', 'name', 'sap', 'ean','dot', 'price', 'pk', 'size']
+#    order_columns = columns
+#
+#    @method_decorator(login_required(login_url='/login/'))
+#    def dispatch(self, request, *args, **kwargs):
+#        return super(jsonlist, self).dispatch(request, *args, **kwargs)
+#
+#    def get_initial_queryset(self, **kwargs):
+#        query = Product.objects.filter(available=True)
+#        return query
+#
+#    def render_column(self, row, column):
+#        # i recommend change 'flat_house.house_block.block_name' to 'address'
+#        if column == 'image':
+#            return format(row.image.image);
+#        else:
+#            return super(jsonlist, self).render_column(row, column)
 
 # pobieranie stanów
 def get_stan(request):
@@ -116,25 +139,3 @@ def get_stan(request):
     connection.commit()
     connection.close()
     return render(request, 'shop/product/get.html')
-
-#class ProductListJson(BaseDatatableView):
-#    columns = ['obrazek', 'nazwa_zwyczajowa', 'rodzaj_narzedzia', 'producent','model', 'opis', 'pk']
-#    order_columns = columns
-#
-#    @method_decorator(login_required(login_url='/login/'))
-#    def dispatch(self, request, *args, **kwargs):
-#        return super(NarzedziaListJson, self).dispatch(request, *args, **kwargs)
-#
-#    def get_initial_queryset(self, **kwargs):
-#        query = Narzedzia.objects.filter(available=True, ownership=False)
-#        return query
-#
-#    def render_column(self, row, column):
-#        if column == 'obrazek':
-#            return format(row.obrazek);
-#
-#        # We want to render user as a custom column
-#        if column == 'user':
-#            return '{0} {1}'.format(row.user_firstname, row.user_lastname)
-#        else:
-#            return super(NarzedziaListJson, self).render_column(row, column)
