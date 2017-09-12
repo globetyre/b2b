@@ -102,9 +102,11 @@
                     </div>
                 </div>
                 <div class="tile is-parent">
+                   {% if product.description is not None %}
                     <article class="tile is-child box">
                         {{ product.description|safe }}
                     </article>
+                    {% endif %}
                 </div>
             </div>
         </div>
