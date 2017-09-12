@@ -1,9 +1,4 @@
-{% extends "shop/base.html" %}
-{% load static %}
-{% block title %}
-{% if category %}{{ category.title }}{% else %}{{ product.name }}{% endif %} {% endblock %}
-
-{% block content %}
+{% extends "shop/base.html" %} {% load static %} {% block title %} {% if category %}{{ category.title }}{% else %}{{ product.name }}{% endif %} {% endblock %} {% block content %}
 
 <div class="tile is-ancestor">
     <div class="tile is-parent">
@@ -12,111 +7,107 @@
         </article>
     </div>
 </div>
-<div class="tile is-ancestor" id="product-detail">
-    <div class="tile is-vertical is-9">
-
+<div class="tile is-ancestor">
+    <div class="tile is-vertical">
         <div class="tile">
             <div class="tile is-parent">
-                <article class="tile is-child ">
+                <article class="tile is-child box">
                     <figure class="image img-max">
                         <img src="/media/{{ product.image.image }}">
                     </figure>
                 </article>
             </div>
-            <div class="tile is-parent is-vertical">
-                <article class="tile is-child notification">
-                    <table class="table is-fullwidth">
-                        <tr>
-                            <th class="title is-4">Producent</th>
-                            <th class="title is-4">{{ product.manufacturer }}</th>
-                        </tr>
-                        <tr>
-                            <th class="title is-4">Model</th>
-                            <th class="title is-4">{{ product.model }}</th>
-                        </tr>
-                        <tr>
-                            <th class="title is-4">Rozmiar</th>
-                            <th class="title is-4">{{ product.size }}</th>
-                        </tr>
-                        <tr>
-                            <th class="title is-4">SAP</th>
-                            <th class="title is-4">{{ product.sap }}</th>
-                        </tr>
-                        <tr>
-                            <th class="title is-4">EAN</th>
-                            <th class="title is-4">{{ product.ean }}</th>
-                        </tr>
-                    </table>
-                </article>
-                <article class="tile is-child notification">
-                    <table class="table is-fullwidth">
-                        <tr>
-                            <th>Indeks ładowności</th>
-                            <th>{{ product.load_index }}</th>
-                        </tr>
-                        <tr>
-                            <th>Indeks prędkości</th>
-                            <th>{{ product.speed_index }}</th>
-                        </tr>
-                        <tr>
-                            <th>Opór toczenia</th>
-                            <th>{{ product.rolling_resistance }}</th>
-                        </tr>
-                        <tr>
-                            <th>Przyczepność</th>
-                            <th>{{ product.adhesion }}</th>
-                        </tr>
-                        <tr>
-                            <th>Hałas</th>
-                            <th>{{ product.noise }}[db]</th>
-                        </tr>
-                        <tr>
-                            <th>DOT</th>
-                            <th>{{ product.dot }}</th>
-                        </tr>
-                    </table>
-                </article>
-            </div>
-        </div>
-    </div>
-    <div class="tile is-parent">
-        <article class="tile is-child notification">
-            <div class="content">
-                <div class="content has-text-centered">
-                    <article class="message is-dark">
-                        <div class="message-body">
-                           {% if request.user.profile.country == "Polska" %}
-                            <p class="title is-1 no-mar-bottom"><b>{{ product.price }}</b> zł</p>
-                            {% else %}
-                            <p class="title is-1 no-mar-bottom"><b>{{ product.price_ue }}</b><span class="icon is-medium"><i class="fa fa-eur" aria-hidden="true"></i></span></p>
+            <div class="tile is-9 is-vertical">
+                <div class="tile">
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            <table class="table is-fullwidth">
+                                <tr>
+                                    <th>Producent</th>
+                                    <th>{{ product.manufacturer }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>{{ product.model }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Rozmiar</th>
+                                    <th>{{ product.size }}</th>
+                                </tr>
+                                <tr>
+                                    <th>SAP</th>
+                                    <th>{{ product.sap }}</th>
+                                </tr>
+                                <tr>
+                                    <th>EAN</th>
+                                    <th>{{ product.ean }}</th>
+                                </tr>
+                            </table>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            <table class="table is-fullwidth">
+                                <tr>
+                                    <th>Indeks ładowności</th>
+                                    <th>{{ product.load_index }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Indeks prędkości</th>
+                                    <th>{{ product.speed_index }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Opór toczenia</th>
+                                    <th>{{ product.rolling_resistance }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Przyczepność</th>
+                                    <th>{{ product.adhesion }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Hałas</th>
+                                    <th>{{ product.noise }}[db]</th>
+                                </tr>
+                                <tr>
+                                    <th>DOT</th>
+                                    <th>{{ product.dot }}</th>
+                                </tr>
+                            </table>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            {% if request.user.profile.country == "Polska" %}
+                            <p class="title is-1 mar-bottom-0 has-text-centered"><b>{{ product.price }}</b> zł</p>
+                            <p class="title is-5 no-mar-bottom has-text-centered">Brutto: {{ product.brutto_pl }} zł</p>
                             {% endif %}
-                            <span class="tag is-dark is-medium"><p>Dostępne: {{ product.stock }} pcs</p></span>
-                            <p>
-                                <form action="{% url 'cart:cart_add' product.id %}" method="post">{% csrf_token %}
-                                    <div class="control">
-                                        <div class="field">
+                            <div class="columns is-centered">
+                                <div class="column is-narrow">
+                                    <form action="{% url 'cart:cart_add' product.id %}" method="post">{% csrf_token %}
+                                        <div class="field has-addons">
+                                            <div class="control">
+                                                <span class="tag is-dark is-small tag-stock"><p>Dostępne: {{ product.stock }} szt.</p></span>
+                                            </div>
                                             <div class="control">
                                                 {{ cart_product_form }}
                                             </div>
+                                            <div class="control">
+                                                <button type="submit" class="button is-dark is-small"><span class="icon is-small"><i class="fa fa-cart-plus" aria-hidden="true"></i></span></button>
+                                            </div>
                                         </div>
-                                        <div class="control">
-                                            <p class="field has-text-right">
-                                                <button type="submit" class="button is-dark btn-add-cart">
-                                                        <span class="icon">
-                                                      <i class="fa fa-cart-plus"></i>
-                                                    </span>
-                                                        <span>Dodaj do koszyka</span>
-                                                    </button>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </form>
-                            </p>
-                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child box">
+                        {{ product.description|safe }}
                     </article>
                 </div>
             </div>
-        </article>
+        </div>
     </div>
 </div>
 {% endblock %}

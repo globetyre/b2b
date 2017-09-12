@@ -278,3 +278,9 @@ a.search-box:hover span {
 .mar-top {
     margin-top: 15px;
 }
+
+.tag-stock {
+    height: 27px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
