@@ -1,8 +1,10 @@
+{% load static %}
 {% autoescape off %}
+<p style="text-align: center"><img src="http://www.globetyre.pl/assets/images/page/logo.png" width="260" height="85" border="0" style="width:260px; height: 85px;" alt="Globe Tyre Logo"></p>
 <br>
 Witaj <b>{{ order.first_name }} {{ order.last_name }}</b>,
 <br>
-<h3>Poniższy mail jest potwierdzeniem złożenia zamówienia nr {{ order.id }}</h3>
+<h3 style="text-align: center">Poniższy mail jest potwierdzeniem złożenia zamówienia nr {{ order.id }}</h3>
 
 <table style="width:100%">
     <tr>
@@ -78,4 +80,6 @@ Witaj <b>{{ order.first_name }} {{ order.last_name }}</b>,
 <br>
 Pozdrawiam,
 <br>
-<b>Globe Tyre</b> {% endautoescape %}
+<b>zespół Globe Tyre</b>
+<br>
+{% endautoescape %}

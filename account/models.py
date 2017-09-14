@@ -10,7 +10,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=100, verbose_name='Miasto', blank=True, null=True)
     country = models.CharField(max_length=100, verbose_name='Kraj', blank=True, null=True)
     delivery_time = models.CharField(max_length=10, verbose_name="Czas dostawy", blank=True, null=True)
-    delivery_price = models.FloatField(verbose_name="Koszt dostawy", blank=True, null=True)
+    delivery_price = models.CharField(max_length=100, verbose_name="Dostawa", blank=True, null=True)
     b2b = models.BooleanField(default=True)
 
     class Meta:

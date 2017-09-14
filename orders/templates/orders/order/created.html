@@ -5,13 +5,18 @@
 {% block content %}
 
 <div class="notification is-primary">
-  <p class="title">Dziękujemy</p>
-  <p class="subtitle">Twoje zamówienie zostało złożone</p>
-  <p class="subtitle"></p><a href="/orders/order/{{ order.id }}">Numer zamówienia: <strong>{{ order.id }}</strong>.</a>
+    <p class="title">Dziękujemy,</p>
+    <br>
+    <p class="subtitle"><a href="/orders/order/{{ order.id }}">Zamówienie <strong>{{ order.id }}</strong> zostało złożone</a></p>
+    <br>
+
+<!--  <p class="subtitle"></p><a href="/orders/order/{{ order.id }}">Numer zamówienia: <strong>{{ order.id }}</strong>.</a>-->
+<!--
     <script>
         var timer = setTimeout(function() {
             window.location='/account/'
         }, 1500);
     </script>
+-->
 </div>
 {% endblock %}

@@ -53,7 +53,7 @@
                                     </tr>
                                     <tr>
                                         <th>Koszt dostay</th>
-                                        <th>{{ request.user.profile.delivery_price }} PLN / paczkę</th>
+                                        <th>{{ request.user.profile.delivery_price|safe }}</th>
                                     </tr>
                                     <tr>
                                         <th>Ostatnie logowanie</th>

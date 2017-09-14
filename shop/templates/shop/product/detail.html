@@ -1,4 +1,8 @@
-{% extends "shop/base.html" %} {% load static %} {% block title %} {% if category %}{{ category.title }}{% else %}{{ product.name }}{% endif %} {% endblock %} {% block content %}
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %} {% if category %}{{ category.title }}{% else %}{{ product.name }}{% endif %} {% endblock %}
+
+{% block content %}
 
 <div class="tile is-ancestor">
     <div class="tile is-parent">

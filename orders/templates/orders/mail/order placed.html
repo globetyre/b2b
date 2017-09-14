@@ -1,6 +1,8 @@
-{% autoescape off %} 
+{% load static %}
+{% autoescape off %}
+<p style="text-align: center"><img src="http://www.globetyre.pl/assets/images/page/logo.png" width="260" height="85" border="0" style="width:260px; height: 85px;" alt="Globe Tyre Logo"></p>
 <br>
-<h3>Zostało złożone nowe zamówienie: {{ order.id }}</h3>
+<h3 style="text-align: center">Zostało złożone nowe zamówienie: {{ order.id }}</h3>
 
 <table style="width:100%">
     <tr>
@@ -76,4 +78,5 @@
 <br>
 Pozdrawiam,
 <br>
-<b>Globe Tyre</b> {% endautoescape %}
+<b>zespół Globe Tyre</b>
+{% endautoescape %}
