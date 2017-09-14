@@ -284,3 +284,10 @@ a.search-box:hover span {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
+
+.is-small-nav {
+    margin-left: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 70%;
+}

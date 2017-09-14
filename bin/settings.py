@@ -31,6 +31,10 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CART_SESSION_ID = 'cart'
+#
+#SESSION_COOKIE_SECURE = True
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
+#CSRF_COOKIE_SECURE = True
 
 # mail
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -142,8 +146,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'static'))
 STATIC_URL = '/static/'
 
 PROJECT_DIR = os.path.dirname(__file__)

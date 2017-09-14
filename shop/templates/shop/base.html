@@ -69,10 +69,10 @@
                             </span>
                         </a>
                         <a class="navbar-item is-hidden-desktop-only" href="/">
-                           <span class="icon is-small"><i class="fa fa-shopping-bag"></i></span>
+                           <span class="icon is-small"><i class="fa fa-shopping-bag"></i></span><p class="is-small-nav">pulpit</p>
                         </a>
                         <a class="navbar-item is-hidden-desktop-only" href="/account/">
-                            <span class="icon is-small"><i class="fa fa-user"></i></span>
+                            <span class="icon is-small"><i class="fa fa-user"></i></span><p class="is-small-nav">twoje zamówienia</p>
                         </a>
 <!--                         <a class="navbar-item" href="/account/">
                             <span class="icon is-small"><i class="fa fa-table"></i></span>
@@ -82,12 +82,12 @@
                                 <a href="{% url 'cart:cart_detail' %}" class="navbar-item">
                                 <div class="tags has-addons">
                                     <span class="tag is-info">{{ total_items }}</span>
-                                    <span class="tag is-info"><span class="icon is-small"><i class="fa fa-shopping-basket"></i></span></span>
+                                    <span class="tag is-info"><span class="icon is-small"><i class="fa fa-shopping-basket"></i></span><p class="is-small-nav">koszyk</p></span>
                                 </div>
                                 </a>
                             {% else %}
                                 <a href="{% url 'cart:cart_detail' %}" class="navbar-item">
-                                    <span class="icon is-small"><i class="fa fa-shopping-basket"></i></span>
+                                    <span class="tag is-info"><span class="icon is-small"><i class="fa fa-shopping-basket"></i></span><p class="is-small-nav">koszyk</p></span>
                                 </a>
                             {% endif %}
                         {% endwith %}
@@ -95,11 +95,11 @@
 
                     {% if request.user.is_authenticated %}
                         <a href="{% url 'logout' %}" class="navbar-item is-hidden-desktop-only" href="https://twitter.com/jgthms" target="_blank">
-                            <span class="icon"><i class="fa fa-sign-out"></i></span>
+                            <span class="icon"><i class="fa fa-sign-out"></i></span><p class="is-small-nav">wyloguj</p>
                         </a>
                     {% else %}
                         <a href="{% url 'login' %}" class="navbar-item is-hidden-desktop-only" href="https://twitter.com/jgthms" target="_blank">
-                            <span class="icon"><i class="fa fa-sign-in"></i></span>
+                            <span class="icon"><i class="fa fa-sign-in"></i></span><p class="is-small-nav">zaloguj</p>
                         </a>
                     {% endif %}
                 </div>
@@ -125,5 +125,6 @@
         <!-- JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="{% static 'js/bulma.js' %}"></script>
+        <script src="{% static 'js/cookie.js' %}"></script>
     </body>
 </html>
