@@ -75,7 +75,7 @@ def get_stan(request):
 
     serverG = "178.217.140.125"
     directoryG = "/"
-    filenameG = "PlatformaOpon.csv"
+    filenameG = "stan_gt_.csv"
 
     ftpG = FTP(serverG) #Set server address
     ftpG.login("stany_mag", "GlobeTyre$#")  # Connect to server
@@ -93,36 +93,41 @@ def get_stan(request):
     # cursor.execute('UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME="shop_product"')
 
     # Load the CSV file into CSV reader
-    csvfile = open('PlatformaOpon.csv', 'rt')
+    csvfile = open('stan_gt_.csv', 'rt', encoding="utf8")
     creader = csv.reader(csvfile, delimiter=';', quotechar='|')
 
     # Iterate through the CSV reader, inserting values into the database
     next(creader)
     for row in creader:
         category_id = 1
-        name = row[1] + ' ' + row[5] + ' ' + row[2] + ' ' + row[7] + '' + row[6]
-        slug = row[3]
+        name = row[11] + ' ' + row[3].replace(' ','R') + ' ' + row[4] + ' ' + row[6] + '' + row[7] + ' ' + row[8] + ' ' + row[14] + ' ' + row[15]
+        slug = row[1]
         image_id = 1
-        sap = row[3]
-        ean = row[4]
-        manufacturer = row[1]
-        model = row[2]
-        size = row[5]
-        speed_index = row[6]
-        load_index = row[7]
-        rolling_resistance = row[8]
-        adhesion = row[9]
-        noise = row[10]
-        dot = '20'+row[15][-2:]
-        stock = row[11]
-        price = row[12].replace(',','.')
-        price_ue = row[16].replace(',','.')
+        sap = row[1]
+        ean = row[5]
+        manufacturer = row[11]
+        model = row[4]
+        size = row[3].replace(' ','R')
+        speed_index = row[7]
+        load_index = row[6]
+        rolling_resistance = row[12]
+        adhesion = row[13]
+        noise = row[14] + ' ' + row[15]
+        dot = '20'+row[26][-2:]
+        stock = int(row[20]) + int(row[21]) + int(row[22]) + int(row[23])
+        price = float(row[19][:-4].replace(',','.').replace('\xa0',''))
+        price_ue = float(row[27][:-4].replace(',','.').replace('\xa0',''))
+        additional_marking = row[8]
+        season = row[10]
+        typ = row[9]
         available = True
+        sale = False
         created = datetime.datetime.now()
         updated = datetime.datetime.now()
-        search_field = 'SAP'+sap+'EAN'+ean+''+manufacturer+''+model.replace(' ','')+''+size.replace('/','').replace('R','')+''+load_index+''+speed_index+'DOT'+dot
+        search_field = 'SAP'+sap+'EAN'+ean+''+manufacturer+''+model.replace(' ','')+''+season+size.replace('/','').replace('R','')+''+load_index+''+speed_index+'DOT'+dot+season[:1]+size.replace('/','').replace('R','')+typ
 
-        cursor.execute('INSERT OR IGNORE INTO shop_product (name, slug, image_id, sap, ean, manufacturer, model, size, speed_index, load_index, rolling_resistance, adhesion, noise, dot, price, stock, available, created, updated, category_id, price_ue, search_field) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (name, slug,image_id , sap, ean, manufacturer, model, size, speed_index, load_index, rolling_resistance, adhesion, noise, dot, price, stock, available, created, updated, category_id, price_ue, search_field))
+        if stock > 0 and price > 0:
+            cursor.execute('INSERT OR IGNORE INTO shop_product (name, slug, sap, ean, manufacturer, model, size, speed_index, load_index, rolling_resistance, adhesion, noise, dot, price, price_ue, stock, available, created, updated, category_id, image_id, sale, search_field, additional_marking, season, typ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (name, slug, sap, ean, manufacturer, model, size, speed_index, load_index, rolling_resistance, adhesion, noise, dot, price, price_ue, stock, available, created, updated, category_id, image_id, sale, search_field, additional_marking, season, typ))
         cursor.execute('UPDATE shop_product SET stock=? WHERE sap=?', (stock,sap))
         cursor.execute('UPDATE shop_product SET price=? WHERE sap=?', (price,sap))
         cursor.execute('UPDATE shop_product SET name=? WHERE sap=?', (name,sap))

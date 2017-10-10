@@ -45,18 +45,31 @@
         <div class="tile is-parent">
             <article class="tile is-child">
                 <div class="content">
-                   <div class="notification">
-                       <div class="columns">
-                           <div class="column is-1"></div>
-                           <div class="column is-2"><p class="mar-bottom-0"><a href="?{% url_replace request 'order_by' 'manufacturer' '-' %}">Producent<span class="icon is-small"><i class="fa fa-sort-desc" aria-hidden="true"></i></span><span class="icon is-small"><i class="fa fa-sort-asc" aria-hidden="true"></i></span></a></p></div>
-                           <div class="column"></div>
-                           <div class="column is-1"><p class="has-text-centered mar-bottom-0">Sezon</p></div>
-                           <div class="column is-1"><p class="has-text-centered mar-bottom-0"><a href="?{% url_replace request 'order_by' 'stock' '-' %}">Dostępność<span class="icon is-small"><i class="fa fa-sort-desc" aria-hidden="true"></i></span><span class="icon is-small"><i class="fa fa-sort-asc" aria-hidden="true"></i></span></a></p></div>
-                           <div class="column is-1"><p class="has-text-centered mar-bottom-0"><a href="?{% url_replace request 'order_by' 'price' '-' %}">Netto<span class="icon is-small"><i class="fa fa-sort-desc" aria-hidden="true"></i></span><span class="icon is-small"><i class="fa fa-sort-asc" aria-hidden="true"></i></span></a></p></div>
-                           <div class="column is-1"><p class="has-text-centered mar-bottom-0">Brutto</p></div>
-                           <div class="column is-1"></div>
-                       </div>
-                   </div>
+                    <div class="notification">
+                        <div class="columns">
+                            <div class="column is-1"></div>
+                            <div class="column is-2">
+                                <p class="mar-bottom-0"><a href="?{% url_replace request 'order_by' 'manufacturer' '-' %}">Producent<span class="icon is-small"><i class="fa fa-sort-desc" aria-hidden="true"></i></span><span class="icon is-small"><i class="fa fa-sort-asc" aria-hidden="true"></i></span></a></p>
+                            </div>
+                            <div class="column"></div>
+                            <div class="column is-1">
+                                <p class="has-text-centered mar-bottom-0"><a href="?{% url_replace request 'order_by' 'typ' '-' %}">Typ<span class="icon is-small"><i class="fa fa-sort-desc" aria-hidden="true"></i></span><span class="icon is-small"><i class="fa fa-sort-asc" aria-hidden="true"></i></span></a></p>
+                            </div>
+                            <div class="column is-1">
+                                <p class="has-text-centered mar-bottom-0"><a href="?{% url_replace request 'order_by' 'season' '-' %}">Sezon<span class="icon is-small"><i class="fa fa-sort-desc" aria-hidden="true"></i></span><span class="icon is-small"><i class="fa fa-sort-asc" aria-hidden="true"></i></span></a></p>
+                            </div>
+                            <div class="column is-1">
+                                <p class="has-text-centered mar-bottom-0"><a href="?{% url_replace request 'order_by' 'stock' '-' %}">Dostępność<span class="icon is-small"><i class="fa fa-sort-desc" aria-hidden="true"></i></span><span class="icon is-small"><i class="fa fa-sort-asc" aria-hidden="true"></i></span></a></p>
+                            </div>
+                            <div class="column is-1">
+                                <p class="has-text-centered mar-bottom-0"><a href="?{% url_replace request 'order_by' 'price' '-' %}">Netto<span class="icon is-small"><i class="fa fa-sort-desc" aria-hidden="true"></i></span><span class="icon is-small"><i class="fa fa-sort-asc" aria-hidden="true"></i></span></a></p>
+                            </div>
+                            <div class="column is-1">
+                                <p class="has-text-centered mar-bottom-0">Brutto</p>
+                            </div>
+                            <div class="column is-1"></div>
+                        </div>
+                    </div>
                     {% for product in products %}
                     <div class="notification">
                         <div class="columns ">
@@ -95,9 +108,28 @@
                                     </tr>
                                 </table>
                             </div>
+                             <div class="column is-1">
+                                {% if product.typ == "OSOB" %}
+                                <p class="icon-season"><span class="icon is-medium" data-tooltip="Osobowe"><img src="{% static 'img/icons/osob.svg' %}" alt=""></span></p>
+                                {% endif %}
+                                {% if product.typ == "CIĘŻAROWE" %}
+                                <p class="icon-season"><span class="icon is-medium" data-tooltip="Ciężarowe"><img src="{% static 'img/icons/ciezarowe.svg' %}" alt=""></span></p>
+                                {% endif %}
+                                {% if product.typ == "BUS" %}
+                                <p class="icon-season"><span class="icon is-medium" data-tooltip="BUS"><img src="{% static 'img/icons/bus.svg' %}" alt=""></span></p>
+                                {% endif %}
+                                {% if product.typ == "SUV" or product.typ == "4x4" %}
+                                <p class="icon-season"><span class="icon is-medium" data-tooltip="SUV | 4x4"><img src="{% static 'img/icons/suv.svg' %}" alt=""></span></p>
+                                {% endif %}
+                            </div>
                             <div class="column is-1">
+                                {% if product.season == "Zima" %}
+                                <p class="icon-season"><span class="icon is-medium icon-season winter"><i class="fa fa-snowflake-o" aria-hidden="true"></i></span></p>
+                                {% endif %} {% if product.season == "Lato" or product.season == "LATO" %}
                                 <p class="icon-season"><span class="icon is-medium summer"><i class="fa fa-sun-o" aria-hidden="true"></i></span></p>
-                                <!--<p class="icon-season"><span class="icon is-medium icon-season winter"><i class="fa fa-snowflake-o" aria-hidden="true"></i></span></p>-->
+                                {% endif %} {% if product.season == "CAŁOROCZNE" or product.season == "All Season" %}
+                                <p class="icon-season"><span class="icon is-medium summer"><i class="fa fa-sun-o" aria-hidden="true"></i></span> <span class="icon is-medium icon-season winter"><i class="fa fa-snowflake-o" aria-hidden="true"></i></span></p>
+                                {% endif %}
                             </div>
                             <div class="column is-1">
                                 {% if product.stock >= 20 %}
