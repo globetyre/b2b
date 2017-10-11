@@ -156,7 +156,7 @@
                                 <form action="{% url 'cart:cart_add' product.id %}" method="post">{% csrf_token %}
                                     <div class="field has-addons mar-top">
                                         <div class="control">
-                                            {{ cart_product_form }}
+                                            {{ cart_product_form.quantity }}
                                         </div>
                                         <div class="control">
                                             <button type="submit" class="button is-success is-small"><span class="icon is-small"><i class="fa fa-cart-plus" aria-hidden="true"></i></span></button>
@@ -171,5 +171,4 @@
             </article>
         </div>
 </section>
-
 {% endblock %}

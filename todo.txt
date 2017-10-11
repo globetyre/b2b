@@ -2,6 +2,7 @@
 + statusy jako model
 + szukanie po wszystkim
 + dodać pole szukajka do modelu
-- sezon po rozmiarze i po producencie
-- magazyny: Allegro, GlobeTyre, PlatformaOpon, WojnaOpon
++ sezon po rozmiarze i po producencie
++ magazyny: Allegro, GlobeTyre, PlatformaOpon, WojnaOpon
++ dorobić blokade buttona jeśli za duża ilość
 

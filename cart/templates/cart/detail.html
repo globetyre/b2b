@@ -1,52 +1,77 @@
 {% extends "shop/base.html" %} {% load static %} {% load widget_tweaks %} {% block title %} Koszyk {% endblock %} {% block content %}
 <section id="cart-detail">
-<article class="message">
-    <div class="message-header">
-        <p>Koszyk</p>
-    </div>
-    <div class="message-body">
-        <table class="table is-striped is-fullwidth">
-            <thead>
-                <tr>
-                    <th>Produkt</th>
-                    <th>Ilość</th>
-                    <th>Usuń</th>
-                    <th>Cena</th>
-                    <th>Suma</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart %} {% with product=item.product %}
-                <tr>
-                    <td><p class="is-6">{{ product.name }}</p></td>
-                    <td>
-                        <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                            {{ item.update_quantity_form.quantity }} {{ item.update_quantity_form.update }}
-                            <button class="button is-small" type="submit"><span class="icon"><i class="fa fa-refresh" aria-hidden="true"></i></span></button> {% csrf_token %}
-                        </form>
-                    </td>
-                    <td><a href="{% url 'cart:cart_remove' product.id %}" class="button is-danger is-small"><span class="icon"><i class="fa fa-trash"></i></span></a></td>
-                    {% if request.user.profile.country == "Polska" %}
-                        <td><p>{{ item.price }} zł</p></td>
-                        <td><p>{{ item.total_price }} zł</p></td>
-                    {% else %}
-                        <td><p><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.price_ue }}</p></td>
-                        <td><p><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.total_price }}</p></td>
-                    {% endif %}
-                </tr>
-                {% endwith %} {% endfor %}
-                <tr class="total">
-                    <td colspan="3">Total</td>
-                    <td></td>
-                    <td><b>{{ cart.get_total_price }}</b> zł</td>
-                </tr>
-            </tbody>
-        </table>
-        <p class="has-text-right">
-            <a href="{% url 'shop:product_list' %}" class="button">Powrót do sklepu</a>
-            <a href="{% url 'orders:order_create' %}" class="button is-success">Zamów</a>
-        </p>
-    </div>
-</article>
+    <article class="message">
+        <div class="message-header">
+            <p>Koszyk</p>
+        </div>
+        <div class="message-body">
+            <table class="table is-striped is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Produkt</th>
+                        <th>Ilość</th>
+                        <th>Usuń</th>
+                        <th>Cena</th>
+                        <th>Suma</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart %} {% with product=item.product %}
+                    <tr>
+                        <td>
+                            <p class="is-6">{{ product.name }}</p>
+                        </td>
+                        <td>
+                            <form action="{% url 'cart:cart_add' product.id %}" method="post" class="f-inline">
+                                {{ item.update_quantity_form.quantity }} {{ item.update_quantity_form.update }}
+                                <button class="button is-small" type="submit"><span class="icon"><i class="fa fa-refresh" aria-hidden="true"></i></span></button> {% csrf_token %}
+                            </form>
+                            {% if item.quantity > product.stock %}
+                                <p class="p-small" value="Ilośc niedostępna">Ilośc niedostępna</p>
+                                <input type="hidden" id="item-quantity" value="error">
+                            {% endif %}
+                        </td>
+                        <td><a href="{% url 'cart:cart_remove' product.id %}" class="button is-danger is-small"><span class="icon"><i class="fa fa-trash"></i></span></a></td>
+                        {% if request.user.profile.country == "Polska" %}
+                        <td>
+                            <p>{{ item.price }} zł</p>
+                        </td>
+                        <td>
+                            <p>{{ item.total_price }} zł</p>
+                        </td>
+                        {% else %}
+                        <td>
+                            <p><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.price_ue }}</p>
+                        </td>
+                        <td>
+                            <p><span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ item.total_price }}</p>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endwith %} {% endfor %}
+                    <tr class="total">
+                        <td colspan="3">Total</td>
+                        <td></td>
+                        <td><b>{{ cart.get_total_price }}</b> zł</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="has-text-right">
+                <a href="{% url 'shop:product_list' %}" class="button">Powrót do sklepu</a>
+                <a href="{% url 'orders:order_create' %}" class="button is-success" onclick="clicked(event)">Zamów</a>
+            </p>
+        </div>
+    </article>
 </section>
+
+<script>
+    function clicked(e) {
+        var quantity = $('#item-quantity').val();
+        if (quantity == 'error') {
+            if (!swal("Ilośc niedostępna!", "Proszę wpisać poprawną ilość!", "error"));
+            e.preventDefault();
+        }
+    }
+</script>
+
 {% endblock %}

@@ -360,3 +360,16 @@ a.search-box:hover span {
     filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
     opacity: 1;
 }
+
+.p-small {
+    text-transform: uppercase;
+    font-size: 90% !important;
+    font-weight: bold;
+    color: #e74c3c;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.f-inline {
+    display: inline;
+}

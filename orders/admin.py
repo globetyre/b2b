@@ -36,11 +36,12 @@ def order_detail(obj):
 order_detail.allow_tags = True
 
 class OrderAdmin(admin.ModelAdmin):
-	list_display = ['id', 'buyer', 'first_name', 'last_name', 'email', 'address', 'postal_code', 'city', 'created', 'updated', 'tracking_number', 'status', 'invoice', order_detail]
-	list_filter = ['created', 'updated', 'status']
-	list_editable = [ 'status', 'tracking_number']
-	inlines = [OrderItemInline]
-	actions = [export_to_csv]
+    list_display = ['id', 'buyer', 'tracking_number', 'status', 'invoice', order_detail, 'created', 'updated']
+    list_display_links = ['id', 'buyer']
+    list_filter = ['created', 'updated', 'status']
+    list_editable = [ 'status', 'tracking_number']
+    inlines = [OrderItemInline]
+    actions = [export_to_csv]
 admin.site.register(Order, OrderAdmin)
 
 class StatusAdmin(admin.ModelAdmin):
