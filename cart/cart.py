@@ -60,25 +60,12 @@ class Cart(object):
 		return sum(item['quantity'] for item in self.cart.values())
 
 	def get_total_price(self):
-		return sum(Decimal(item['price']) * item['quantity'] for item in
-	self.cart.values())
+		return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+
+	def get_total_price_delivery(self):
+		return self.__len__() * 10
 
 	def clear(self):
 		# remove cart from session
 		del self.session[settings.CART_SESSION_ID]
 		self.session.modified = True
-
-
-#	@property
-#	def coupon(self):
-#		if self.coupon_id:
-#			return Coupon.objects.get(id=self.coupon_id)
-#		return None
-#
-#	def get_discount(self):
-#		if self.coupon:
-#			return ((self.coupon.discount) * (self.__len__() / Decimal('2')).quantize(0, ROUND_HALF_UP))
-#		return Decimal('0').quantize(0, ROUND_HALF_UP)
-#
-#	def get_total_price_after_discount(self):
-#		return self.get_total_price() + (self.get_discount())

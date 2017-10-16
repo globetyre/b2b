@@ -5,6 +5,7 @@ import datetime
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
+from bin.actions import *
 
 
 class OrderItemInline(admin.TabularInline):
@@ -29,19 +30,20 @@ def export_to_csv(modeladmin, request, queryset):
 			data_row.append(value)
 		writer.writerow(data_row)
 	return response
-export_to_csv.short_description = 'Export to CSV'
+export_to_csv.short_description = 'CSV'
 
 def order_detail(obj):
 	return '<a href="{}"><i class="fa fa-eye" aria-hidden="true"></i></a>'.format(reverse('orders:order_detail', args=[obj.id]))
 order_detail.allow_tags = True
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'buyer', 'tracking_number', 'status', 'invoice', order_detail, 'created', 'updated']
-    list_display_links = ['id', 'buyer']
-    list_filter = ['created', 'updated', 'status']
-    list_editable = [ 'status', 'tracking_number']
-    inlines = [OrderItemInline]
-    actions = [export_to_csv]
+	list_display = ['id', 'buyer', 'tracking_number', 'invoice', 'status', order_detail, 'kurier', 'created']
+	ordering = ['status']
+	list_display_links = ['id', 'buyer']
+	list_filter = ['created', 'status', 'kurier']
+	list_editable = ['tracking_number', 'invoice']
+	inlines = [OrderItemInline]
+	actions = [set_stock, export_to_csv ]
 admin.site.register(Order, OrderAdmin)
 
 class StatusAdmin(admin.ModelAdmin):
@@ -49,9 +51,3 @@ class StatusAdmin(admin.ModelAdmin):
     search_fields = ['name']
     prepopulated_fields = {'slug': ('name',)}
 admin.site.register(Status, StatusAdmin)
-
-#class DeliveryInfoAdmin(admin.ModelAdmin):
-#    list_display = ['name', 'image', 'delivery_time', 'delivery_price']
-#    search_fields = ['name']
-#    prepopulated_fields = {'slug': ('name',)}
-#admin.site.register(DeliveryInfo, DeliveryInfoAdmin)

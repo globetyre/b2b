@@ -37,11 +37,8 @@
                 {% endfor %}
                 </tbody>
             </table>
-            {% if request.user.profile.country == "Polska" %}
                 <p class="has-text-right"><strong>Total: {{ cart.get_total_price }} zł</strong></p>
-            {% else %}
-                <p class="has-text-right"><strong>Total: <span class="icon is-small"><i class="fa fa-eur" aria-hidden="true"></i></span>{{ cart.get_total_price }}</strong></p>
-            {% endif %}
+
         </div>
     </article>
 
@@ -139,6 +136,13 @@
                             <p class="control">
                                 {{ form.country|add_class:"input input-disabled" }}
                             </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="has-text-right">{{ form.kurier|add_class:"checkbox" }} Wysyłka kurierem (<strong>+ {{ cart.get_total_price_delivery }} zł</strong>)</p>
                         </div>
                     </div>
                 </div>

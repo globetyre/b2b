@@ -111,6 +111,14 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>Spsób dostawy</th>
+                                    {% if order.kurier is True %}
+                                    <td>Wysyłka kurierem</td>
+                                    {% else %}
+                                    <td>Odbiór osobisty</td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
                                     <th>Status</th>
                                     {% if order.status_id == 1 %}
                                     <td><a class="button is-info is-small">{{ order.status }}</a></td>
@@ -148,7 +156,7 @@
                                         <th>Produkt</th>
                                         <th>Cena</th>
                                         <th>Ilość</th>
-                                        <th>Total</th>
+                                        <th>Suma</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -160,10 +168,25 @@
                                         <td class="num">{{ item.get_cost }} PLN</td>
                                     </tr>
                                     {% endfor %}
-                                    <tr class="total">
+                                    {% if order.kurier is True %}
+									<tr class="total">
+										<td colspan="3">Wysyłka kurierem</td>
+										<td class="num">+ {{ order.get_total_delivery }} PLN</td>
+									</tr>
+									<tr class="total">
+                                        <td colspan="3">Total</td>
+                                        <td class="num">{{ order.get_total_delivery_cost }} PLN</td>
+                                    </tr>
+									{% else %}
+									<tr class="total">
+										<td colspan="3">Odbiór osobisty</td>
+										<td class="num">+ 0 PLN</td>
+									</tr>
+									<tr class="total">
                                         <td colspan="3">Total</td>
                                         <td class="num">{{ order.get_total_cost }} PLN</td>
                                     </tr>
+										{% endif %}
                                 </tbody>
                             </table>
                         </div>

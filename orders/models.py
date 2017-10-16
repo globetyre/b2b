@@ -2,7 +2,7 @@ from django.db import models
 from shop.models import Product
 from django.contrib.auth.models import User
 
-status_choices = (('New', 'New'), ('Accepted', 'Accepted'), ('Done', 'Done'), ('Rejected', 'Rejected'))
+status_choices = (('Nowe', 'Nowe'), ('Wysłane', 'Wysłane'), ('Anulowane', 'Anulowane'))
 
 class Status(models.Model):
     name = models.CharField(max_length=200, db_index=True)
@@ -30,6 +30,7 @@ class Order(models.Model):
 	invoice = models.FileField(upload_to='Invoices/%Y/%m/%d', blank=True)
 	tracking_number = models.CharField(max_length=100, null=True, blank=True)
 	status = models.ForeignKey(Status, related_name='status', default=1)
+	kurier = models.BooleanField("Wysyłka kurierem", default=False)
 
 	class Meta:
 		ordering = ('-created',)
@@ -42,6 +43,12 @@ class Order(models.Model):
 	def get_total_cost(self):
 		return sum(item.get_cost() for item in self.items.all())
 
+	def get_total_delivery(self):
+		return sum(item.get_delivery() for item in self.items.all())
+
+	def get_total_delivery_cost(self):
+		return sum(item.get_delivery_cost() for item in self.items.all())
+
 class OrderItem(models.Model):
 	order = models.ForeignKey(Order, related_name='items')
 	product = models.ForeignKey(Product, related_name='order_items')
@@ -53,3 +60,9 @@ class OrderItem(models.Model):
 
 	def get_cost(self):
 		return self.price * self.quantity
+
+	def get_delivery(self):
+		return self.quantity * 10
+
+	def get_delivery_cost(self):
+		return (self.price * self.quantity) + (self.quantity * 10)

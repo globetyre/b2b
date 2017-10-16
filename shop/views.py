@@ -50,26 +50,6 @@ def product_detail(request, id, slug):
     cart_product_form = CartAddProductForm()
     return render(request, 'shop/product/detail.html', {'product': product, 'cart_product_form': cart_product_form})
 
-#class jsonlist(BaseDatatableView):
-#    model = Product
-#    columns = ['image', 'manufacturer', 'name', 'sap', 'ean','dot', 'price', 'pk', 'size']
-#    order_columns = columns
-#
-#    @method_decorator(login_required(login_url='/login/'))
-#    def dispatch(self, request, *args, **kwargs):
-#        return super(jsonlist, self).dispatch(request, *args, **kwargs)
-#
-#    def get_initial_queryset(self, **kwargs):
-#        query = Product.objects.filter(available=True)
-#        return query
-#
-#    def render_column(self, row, column):
-#        # i recommend change 'flat_house.house_block.block_name' to 'address'
-#        if column == 'image':
-#            return format(row.image.image);
-#        else:
-#            return super(jsonlist, self).render_column(row, column)
-
 # pobieranie stanów
 def get_stan(request):
 
