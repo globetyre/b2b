@@ -37,6 +37,7 @@ a.navbar-item.is-active,
 .main {
     padding-top: 3%;
     background-color: #f5f5f5;
+	min-height: 75vh;
 }
 
 .main a {

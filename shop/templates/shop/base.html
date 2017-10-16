@@ -82,9 +82,6 @@
                         <a class="navbar-item is-hidden-desktop-only" href="/account/">
                             <span class="icon is-small"><i class="fa fa-user"></i></span><p class="is-small-nav">twoje zamówienia</p>
                         </a>
-<!--                         <a class="navbar-item" href="/account/">
-                            <span class="icon is-small"><i class="fa fa-table"></i></span>
-                        </a> -->
                         {% with total_items=cart|length %}
                             {% if cart|length > 0 %}
                                 <a href="{% url 'cart:cart_detail' %}" class="navbar-item">
@@ -100,7 +97,11 @@
                             {% endif %}
                         {% endwith %}
                     {% endif %}
-
+                    {% if request.user.is_staff %}
+						 <a class="navbar-item" href="/admin/">
+                            <span class="icon is-small"><i class="fa fa-table"></i></span><p class="is-small-nav">Panel administracyjny</p>
+                        </a>
+                    {% endif %}
                     {% if request.user.is_authenticated %}
                         <a href="{% url 'logout' %}" class="navbar-item is-hidden-desktop-only" href="https://twitter.com/jgthms" target="_blank">
                             <span class="icon"><i class="fa fa-sign-out"></i></span><p class="is-small-nav">wyloguj</p>
