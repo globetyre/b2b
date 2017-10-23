@@ -108,16 +108,16 @@ def get_stan(request):
 
         if stock > 0 and price > 0:
             cursor.execute('INSERT OR IGNORE INTO shop_product (name, slug, sap, ean, manufacturer, model, size, speed_index, load_index, rolling_resistance, adhesion, noise, dot, price, price_ue, stock, available, created, updated, category_id, image_id, sale, search_field, additional_marking, season, typ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (name, slug, sap, ean, manufacturer, model, size, speed_index, load_index, rolling_resistance, adhesion, noise, dot, price, price_ue, stock, available, created, updated, category_id, image_id, sale, search_field, additional_marking, season, typ))
-        cursor.execute('UPDATE shop_product SET stock=? WHERE sap=?', (stock,sap))
-        cursor.execute('UPDATE shop_product SET price=? WHERE sap=?', (price,sap))
-        cursor.execute('UPDATE shop_product SET name=? WHERE sap=?', (name,sap))
-        cursor.execute('UPDATE shop_product SET ean=? WHERE sap=?', (ean,sap))
-        cursor.execute('UPDATE shop_product SET model=? WHERE sap=?', (model,sap))
-        cursor.execute('UPDATE shop_product SET dot=? WHERE sap=?', (dot,sap))
-        cursor.execute('UPDATE shop_product SET updated=? WHERE sap=?', (updated,sap))
-        cursor.execute('UPDATE shop_product SET price_ue=? WHERE sap=?', (price_ue,sap))
-        cursor.execute('UPDATE shop_product SET available=? WHERE sap=?', (available,sap))
-        cursor.execute('UPDATE shop_product SET search_field=? WHERE sap=?', (search_field,sap))
+            cursor.execute('UPDATE shop_product SET stock=? WHERE sap=?', (stock,sap))
+            cursor.execute('UPDATE shop_product SET price=? WHERE sap=?', (price,sap))
+            cursor.execute('UPDATE shop_product SET name=? WHERE sap=?', (name,sap))
+            cursor.execute('UPDATE shop_product SET ean=? WHERE sap=?', (ean,sap))
+            cursor.execute('UPDATE shop_product SET model=? WHERE sap=?', (model,sap))
+            cursor.execute('UPDATE shop_product SET dot=? WHERE sap=?', (dot,sap))
+            cursor.execute('UPDATE shop_product SET updated=? WHERE sap=?', (updated,sap))
+            cursor.execute('UPDATE shop_product SET price_ue=? WHERE sap=?', (price_ue,sap))
+            cursor.execute('UPDATE shop_product SET available=? WHERE sap=?', (available,sap))
+            cursor.execute('UPDATE shop_product SET search_field=? WHERE sap=?', (search_field,sap))
 
     # Close the csv file, commit changes, and close the connection
     csvfile.close()
