@@ -245,6 +245,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="has-text-right">{{ form.kurier|add_class:"checkbox" }} Wysyłka kurierem (<strong>+ {{ cart.get_total_price_delivery }} zł</strong>)</p>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="field is-grouped is-grouped-right">
                     <div class="control">

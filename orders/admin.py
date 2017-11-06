@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 from bin.actions import *
+from bin.actions import export_dpd, make_canceled
 
 
 class OrderItemInline(admin.TabularInline):
@@ -43,7 +44,7 @@ class OrderAdmin(admin.ModelAdmin):
 	list_filter = ['created', 'status', 'kurier']
 	list_editable = ['tracking_number', 'invoice']
 	inlines = [OrderItemInline]
-	actions = [set_stock, export_to_csv ]
+	actions = [set_stock, export_dpd, make_canceled]
 admin.site.register(Order, OrderAdmin)
 
 class StatusAdmin(admin.ModelAdmin):

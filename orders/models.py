@@ -49,6 +49,7 @@ class Order(models.Model):
 	def get_total_delivery_cost(self):
 		return sum(item.get_delivery_cost() for item in self.items.all())
 
+
 class OrderItem(models.Model):
 	order = models.ForeignKey(Order, related_name='items')
 	product = models.ForeignKey(Product, related_name='order_items')
@@ -66,3 +67,18 @@ class OrderItem(models.Model):
 
 	def get_delivery_cost(self):
 		return (self.price * self.quantity) + (self.quantity * 10)
+
+	def package(self):
+		return int(self.quantity)
+#
+#    def package(self):
+#        return int((self.quantity))
+#    package = property(_package)
+#    package.short_description = 'Liczba paczek'
+#
+#
+#    def _weight(self):
+#        package = int(self.quantity) * "14.9|"
+#        return package[:-1]
+#    weight = property(_weight)
+#    _weight.short_description = 'Waga'
