@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import djmoney_rates
 from django.core.urlresolvers import reverse_lazy
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,9 +38,15 @@ CART_SESSION_ID = 'cart'
 #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
 #CSRF_COOKIE_SECURE = True
 
+DJANGO_MONEY_RATES = {
+    'DEFAULT_BACKEND': 'djmoney_rates.backends.OpenExchangeBackend',
+    'OPENEXCHANGE_URL': 'https://openexchangerates.org/api/latest.json',
+    'OPENEXCHANGE_APP_ID': 'fcf465fbf2374e84ac1c4a6d6d94eb49',
+    'OPENEXCHANGE_BASE_CURRENCY': 'USD',
+}
+
 # mail
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'globetyre.b2b@gmail.com'
@@ -47,13 +55,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # login
-
 LOGIN_REDIRECT_URL = reverse_lazy('dashboard')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -66,6 +72,8 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'account',
+	'djmoney',
+	'djmoney_rates',
 ]
 
 MIDDLEWARE = [
