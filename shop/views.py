@@ -7,16 +7,16 @@ import csv
 from ftplib import FTP
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-#import json
 from django.core import serializers
 from django.http import HttpResponse
-#from django.http import JsonResponse
-
+from django.utils.encoding import smart_str
 from django.utils.decorators import method_decorator
 import simplejson as simplejson
 from django.views import generic
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
+from moneyed import Money
+from djmoney_rates.utils import convert_money
 
 
 @login_required
@@ -124,3 +124,50 @@ def get_stan(request):
     connection.commit()
     connection.close()
     return render(request, 'shop/product/get.html')
+
+def stany_mag(request):
+
+	with open('b2b_stany_mag.csv', "w", newline='') as csv_file:
+		writer = csv.writer(csv_file, delimiter=';')
+		writer.writerow(['Nazwa', 'SAP', 'EAN', 'Producent', 'Rozmiar', 'Model', 'Sezon', 'Typ', 'DOT', 'PLN [Netto]', 'Ilość'])
+		products = Product.objects.all().values_list('name', 'sap', 'ean', 'manufacturer', 'size', 'model', 'season', 'typ', 'dot', 'price', 'stock').order_by('sap').filter(available=True)
+
+		for product in products:
+			writer.writerow([product[0], product[1], product[2], product[3], product[4], product[5], product[6], product[7], product[8], product[9], product[10]])
+
+    # Upload plików
+	serverG = "178.217.140.125"
+	directoryG = "/"
+	filenamePL = "b2b_stany_mag.csv"
+
+	ftpG = FTP(serverG)  # Set server address
+	ftpG.login("stany_ph", "1qazxsW@")  # Connect to server
+	ftpG.cwd(directoryG)  # Move to the desired folder in server
+	ftpG.storbinary('STOR ' + filenamePL, open(filenamePL, 'rb'))  # Download file from server
+	ftpG.close()  # Close connection
+
+	return render(request, 'shop/product/get.html')
+
+def stany_mag_ue(request):
+
+	with open('b2b_stocks.csv', "w", newline='') as csv_file:
+		writer = csv.writer(csv_file, delimiter=';')
+		writer.writerow(['Name', 'SAP', 'EAN', 'Manufacturer', 'Size', 'Model', 'Season', 'Type', 'DOT', 'EUR [Netto]', 'Stock'])
+		products = Product.objects.all().values_list('name', 'sap', 'ean', 'manufacturer', 'size', 'model', 'season', 'typ', 'dot', 'price', 'stock').order_by('sap').filter(available=True)
+
+		for product in products:
+			price_eur = convert_money(product[9], "PLN", "EUR")
+			writer.writerow([product[0], product[1], product[2], product[3], product[4], product[5], product[6], product[7], product[8], price_eur, product[10]])
+
+    # Upload plików
+	serverG = "178.217.140.125"
+	directoryG = "/"
+	filenameUE = "b2b_stocks.csv"
+
+	ftpG = FTP(serverG)  # Set server address
+	ftpG.login("stany_ph", "1qazxsW@")  # Connect to server
+	ftpG.cwd(directoryG)  # Move to the desired folder in server
+	ftpG.storbinary('STOR ' + filenameUE, open(filenameUE, 'rb'))  # Download file from server
+	ftpG.close()  # Close connection
+
+	return render(request, 'shop/product/get.html')
