@@ -14,7 +14,7 @@ class ImagesAdmin(admin.ModelAdmin):
 admin.site.register(Images, ImagesAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['image', 'name', 'slug', 'ean', 'price', 'stock', 'available', 'sale', 'updated']
+    list_display = ['image_tag', 'image', 'name', 'slug', 'ean', 'price', 'stock', 'available', 'sale', 'updated']
     list_display_links = ["name"]
     list_filter = ['available', 'created', 'updated', 'sale', 'season', 'typ']
     list_editable = ['price', 'stock', 'available', 'image', 'sale']

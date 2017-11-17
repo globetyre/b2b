@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from decimal import Decimal
+from django.utils.html import mark_safe
 
 
 class Category(models.Model):
@@ -82,3 +83,7 @@ class Product(models.Model):
     def brutto_eu(self):
         return round((float(self.price_ue) * 1.23), 2)
     brutto_eu.short_description = 'Brutto [EU]'
+
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.image.url))
+    image_tag.short_description = 'Zdjęcie'
